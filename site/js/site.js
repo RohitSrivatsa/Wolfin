@@ -5,7 +5,7 @@
   'use strict';
 
   /* ---- the one place to set the contact address ------------------------ */
-  var EMAIL = 'hello@wolfinn.ai'; // placeholder until the real inbox is set up
+  var EMAIL = 'rohit@wolfinn.org';
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -37,7 +37,7 @@
   function onScroll() { if (bar) bar.classList.toggle('is-scrolled', window.scrollY > 8); }
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---- menu (the tide comes in) ---------------------------------------- */
+  /* ---- menu ------------------------------------------------------------ */
   var menu = $('#menu'), menuBtn = $('.bar__menu');
   function setMenu(open) {
     if (!menu || !menuBtn) return;
@@ -50,43 +50,29 @@
   if (menuBtn) menuBtn.addEventListener('click', function () { setMenu(!menu.classList.contains('is-open')); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu && menu.classList.contains('is-open')) setMenu(false); });
 
-  /* ---- page transitions (the tide) ------------------------------------- */
-  var tide = $('#tide');
-  var NAMES = { 'index.html': 'Home', '': 'Home', 'services.html': 'Services', 'about.html': 'About', 'contact.html': 'Contact' };
-  function pageOf(url) { var p = url.pathname.split('/').pop(); return p; }
-  if (tide && !reduce) {
-    document.addEventListener('click', function (e) {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      var a = e.target.closest && e.target.closest('a[href]');
-      if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
-      var url = new URL(a.href, location.href);
-      if (url.origin !== location.origin || !(pageOf(url) in NAMES)) return;
-      if (url.pathname === location.pathname) return; // same page (hash links)
-      e.preventDefault();
-      var name = NAMES[pageOf(url)];
-      var label = $('.tide__name', tide); if (label) label.textContent = name;
-      try { sessionStorage.setItem('wolfinn-tide', name); } catch (err) {}
-      tide.classList.add('is-up');
-      setTimeout(function () { location.href = url.href; }, 640);
+  /* ---- light / dark ---------------------------------------------------- */
+  var root = document.documentElement;
+  var darkMQ = window.matchMedia('(prefers-color-scheme: dark)');
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : darkMQ.matches; }
+  function syncToggle() {
+    var dark = isDark();
+    $$('.theme-toggle').forEach(function (b) {
+      b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      b.setAttribute('aria-pressed', dark ? 'true' : 'false');
     });
-    var html = document.documentElement;
-    if (html.classList.contains('tide-arrive')) {
-      var label = $('.tide__name', tide);
-      try { if (label) label.textContent = sessionStorage.getItem('wolfinn-tide') || ''; sessionStorage.removeItem('wolfinn-tide'); } catch (err) {}
-      requestAnimationFrame(function () {
-        setTimeout(function () {
-          tide.classList.add('is-draining');
-          html.classList.remove('tide-arrive');
-          setTimeout(function () { tide.classList.remove('is-draining'); }, 760);
-        }, 160);
-      });
-    }
-    window.addEventListener('pageshow', function (e) {
-      if (e.persisted) { tide.classList.remove('is-up', 'is-draining'); html.classList.remove('tide-arrive'); }
-    });
-  } else {
-    document.documentElement.classList.remove('tide-arrive');
+    var meta = $('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#0C0F13' : '#FFFFFF');
   }
+  $$('.theme-toggle').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('wolfinn-theme', next); } catch (e) {}
+      syncToggle();
+    });
+  });
+  if (darkMQ.addEventListener) darkMQ.addEventListener('change', syncToggle);
+  syncToggle();
 
   /* ---- pointer depth on the scenes ------------------------------------- */
   if (fine && !reduce) {
