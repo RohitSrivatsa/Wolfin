@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wolfinn · Software and AI for your business</title>
+<meta name="description" content="Wolfinn finds the gaps in your business and closes them with software, AI and automation. Calm on the surface, relentless underneath.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:title" content="Wolfinn">
+<meta property="og:description" content="Software and AI that quietly takes the busywork off your plate.">
+<meta property="og:image" content="img/mark-512.png">
+<script>try{if(sessionStorage.getItem('wolfinn-tide')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('tide-arrive')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<link rel="stylesheet" href="css/scrollcraft.css">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="bar__brand" href="index.html" aria-label="Wolfinn home"><img src="img/wolfinn-wordmark.png" width="576" height="123" alt="Wolfinn"></a>
+  <nav class="bar__nav" aria-label="Main">
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a class="btn btn--ink" data-email href="contact.html">Email us</a>
+  </nav>
+  <button class="bar__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Menu">
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="menu__foot"><span class="label">Email</span><a data-email data-email-text href="contact.html" style="color:#F2EFEA">hello</a></div>
+  <div class="orca orca--drift" data-orca></div>
+</div>
+
+<main id="main">
+
+  <!-- Hero: the mark, unpacked -->
+  <section class="hero" data-sc-act="flow" data-depth-scene aria-labelledby="hero-title">
+    <div class="scene">
+      <div class="moon-plane" data-sc-parallax="1.4"><div class="moon pp" data-depth="5"></div></div>
+      <div class="wolf-plane" data-sc-parallax="0.5"><img class="wolf pp" data-depth="12" src="img/wolf-island.svg" width="722" height="491" alt="A wolf howling on a rocky island in front of an orange moon"></div>
+      <div class="water" data-ripple></div>
+      <div class="orca orca--drift" data-orca></div>
+    </div>
+    <div class="hero__copy">
+      <h1 id="hero-title">Calm on the surface. <em>Relentless underneath.</em></h1>
+      <p class="hero__sub">Software and AI that quietly takes the busywork off your plate.</p>
+      <div class="hero__actions">
+        <a class="btn btn--ink" href="#gap">Find your gap</a>
+        <a class="btn btn--ghost" data-email href="contact.html">Email us</a>
+      </div>
+    </div>
+    <div class="hero__below">
+      <span class="label">Below the waterline</span>
+      <p>Assistants, automations and custom software, working out of sight.</p>
+    </div>
+  </section>
+
+  <!-- The gap finder: the centrepiece -->
+  <section class="gap" id="gap" aria-labelledby="gap-title">
+    <div class="gap__surface">
+      <h2 id="gap-title">Where does your week <em>leak?</em></h2>
+      <p class="gap__hint">Pick a job you repeat every week, or type your own. Watch it sink.</p>
+      <div class="chips" role="group" aria-label="Pick a task">
+        <button class="chip" type="button" data-task="calls" aria-pressed="true">Answering calls after hours</button>
+        <button class="chip" type="button" data-task="invoices" aria-pressed="false">Chasing unpaid invoices</button>
+        <button class="chip" type="button" data-task="sheets" aria-pressed="false">Copying data between spreadsheets</button>
+        <button class="chip" type="button" data-task="booking" aria-pressed="false">Booking appointments</button>
+        <button class="chip" type="button" data-task="quotes" aria-pressed="false">Writing quotes</button>
+        <button class="chip" type="button" data-task="questions" aria-pressed="false">Answering the same questions</button>
+      </div>
+      <form class="own" autocomplete="off">
+        <label class="visually-hidden" for="own-task">Describe your own task</label>
+        <input id="own-task" name="task" type="text" maxlength="90" placeholder="Or type your own, e.g. updating stock levels">
+        <button class="btn btn--ink" type="submit">Sink it</button>
+      </form>
+    </div>
+    <div class="gap__sea">
+      <div class="water" data-ripple><div class="shafts"></div></div>
+      <div class="gap__deep">
+        <div class="task" aria-live="polite"><span class="label">Your task</span><span class="task__txt">Answering calls after hours</span></div>
+        <div class="current">
+          <svg class="current__line" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path class="base"/><path class="lit"/></svg>
+          <ol class="nodes" aria-label="How it could work"></ol>
+          <div class="orca" data-orca></div>
+        </div>
+        <div class="gap__result" aria-live="polite">
+          <p>Every call answered and booked. <em>Nobody stays late.</em></p>
+          <div class="gap__cta">
+            <a class="btn btn--moon gap__mail" data-email href="contact.html">Email us about this</a>
+            <small>Something like this, built around your business.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services: each tile floods on hover or tap -->
+  <section class="sec" id="services" aria-labelledby="svc-title">
+    <div class="sec__head" data-sc-in>
+      <h2 id="svc-title">What we can <em>take off your hands.</em></h2>
+      <p>Hover or tap a service to see what happens below the surface.</p>
+    </div>
+    <div class="svc-grid" data-sc-in data-sc-stagger="60">
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M7 11c1.2-1 2.3-1 3.5 0s2.3 1 3.5 0"/></svg></span><h3>Gap audit</h3></span><p>We find where time leaks, and what's worth fixing first.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01"/></svg></span><h3>AI assistants</h3></span><p>Chat, voice and email helpers that know your business.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.5 12h4l5-5.2M11.5 12l5 5.2"/></svg></span><h3>Workflow automation</h3></span><p>The handoffs between your tools, done for you.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><path d="M8 7 3 12l5 5M16 7l5 5-5 5M13.5 5l-3 14"/></svg></span><h3>Custom software</h3></span><p>Internal tools built around how you actually work.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18M6 6.8h.01M8.5 6.8h.01"/></svg></span><h3>Websites and web apps</h3></span><p>Fast, clear sites that bring in work.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><rect x="2.5" y="8" width="9" height="8" rx="4"/><rect x="12.5" y="8" width="9" height="8" rx="4"/></svg></span><h3>Integrations and data</h3></span><p>Your tools talking, your numbers in one place.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></span><h3>Software consulting</h3></span><p>The right tools, chosen and set up properly.</p><span class="water"></span></button>
+      <button class="svc" type="button" aria-expanded="false"><span class="svc__top"><span class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M5.6 5.6l3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/></svg></span><h3>Care and training</h3></span><p>Kept running, and your team confident using it.</p><span class="water"></span></button>
+    </div>
+  </section>
+
+  <!-- How we work: a descent -->
+  <section class="dives" aria-labelledby="dives-title">
+    <div class="water water--flat" data-ripple><div class="shafts"></div></div>
+    <div class="dives__in">
+      <h2 id="dives-title">Simple, <em>in four dives.</em></h2>
+      <ol class="dive-list" data-sc-in data-sc-stagger="120">
+        <li class="dive"><span class="label">Surface</span><h3>Listen</h3><p>Where your time goes.</p></li>
+        <li class="dive"><span class="label">Shallow</span><h3>Map</h3><p>The gaps worth closing.</p></li>
+        <li class="dive"><span class="label">Deep</span><h3>Build</h3><p>Tested on your real work.</p></li>
+        <li class="dive"><span class="label">Deeper</span><h3>Keep</h3><p>Looked after as you grow.</p></li>
+      </ol>
+    </div>
+    <div class="orca orca--left orca--drift" data-orca></div>
+  </section>
+
+  <!-- Close: the scene returns -->
+  <section class="close" data-depth-scene aria-labelledby="close-title">
+    <div class="scene">
+      <div class="moon-plane"><div class="moon pp" data-depth="5"></div></div>
+      <div class="wolf-plane"><img class="wolf pp" data-depth="12" src="img/wolf-island.svg" width="722" height="491" alt=""></div>
+      <div class="water" data-ripple></div>
+      <div class="orca orca--drift" data-orca></div>
+    </div>
+    <div class="close__copy" data-sc-in>
+      <h2 id="close-title">If it can be done better, <em>we'll find how.</em></h2>
+    </div>
+    <div class="close__mail">
+      <a class="mailline" data-email data-email-text data-subject="A gap in my business" href="contact.html">hello</a>
+      <button class="btn btn--light" type="button" data-copy-email="copy-note-home">Copy email</button>
+      <span class="copy-note" id="copy-note-home" aria-live="polite"></span>
+    </div>
+    <footer class="foot">
+      <span>© Wolfinn</span>
+      <nav aria-label="Footer"><a href="services.html">Services</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+    </footer>
+  </section>
+</main>
+
+<div class="tide" id="tide" aria-hidden="true"><span class="tide__name label"></span><div class="orca" data-orca></div></div>
+
+<script src="js/scrollcraft.js"></script>
+<script src="js/orca.js"></script>
+<script src="js/site.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+</body>
+</html>

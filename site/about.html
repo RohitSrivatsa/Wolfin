@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · Wolfinn</title>
+<meta name="description" content="Wolfinn is a one-person software and AI studio. You talk to the person who builds it.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:title" content="Wolfinn">
+<meta property="og:description" content="Software and AI that quietly takes the busywork off your plate.">
+<meta property="og:image" content="img/mark-512.png">
+<script>try{if(sessionStorage.getItem('wolfinn-tide')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('tide-arrive')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<link rel="stylesheet" href="css/scrollcraft.css">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="bar__brand" href="index.html" aria-label="Wolfinn home"><img src="img/wolfinn-wordmark.png" width="576" height="123" alt="Wolfinn"></a>
+  <nav class="bar__nav" aria-label="Main">
+    <a href="services.html">Services</a>
+    <a href="about.html" aria-current="page">About</a>
+    <a href="contact.html">Contact</a>
+    <a class="btn btn--ink" data-email href="contact.html">Email us</a>
+  </nav>
+  <button class="bar__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Menu">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="about.html" aria-current="page">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="menu__foot"><span class="label">Email</span><a data-email data-email-text href="contact.html" style="color:#F2EFEA">hello</a></div>
+  <div class="orca orca--drift" data-orca></div>
+</div>
+
+<main id="main">
+  <section class="page-top" aria-labelledby="pt">
+    <div class="page-top__in" data-sc-in><h1 id="pt">Small <em>on purpose.</em></h1><p>One founder. You talk to the person who builds it.</p></div>
+    <div class="water" data-ripple></div>
+    <div class="orca orca--drift" data-orca></div>
+  </section>
+  <section class="note" aria-label="A note from the founder">
+    <div class="facts" data-sc-in data-sc-stagger="80">
+      <div><b>Who</b>One founder, hands on.</div>
+      <div><b>What</b>Software and AI, applied to real businesses.</div>
+      <div><b>Promise</b>If technology isn't the answer, you'll hear it.</div>
+    </div>
+    <div class="letter" data-sc-in>
+      <p>Most businesses have a gap somewhere: a job done by hand that shouldn't be, two tools that don't talk, a customer left waiting.</p>
+      <p>Wolfinn exists to close those gaps. Quietly, properly, and with you involved at every step.</p>
+      <div class="sig"><img src="img/mark-512.png" width="48" height="48" alt=""><div><span>Founder</span><small>Wolfinn</small></div></div>
+    </div>
+  </section>
+  <section class="namesake" aria-label="Why a wolf and a fin">
+    <div class="namesake__sky">
+      <div class="scene"><div class="moon-plane"><div class="moon"></div></div><div class="wolf-plane"><img class="wolf" src="img/wolf-island.svg" width="722" height="491" alt="The Wolfinn wolf on its island"></div></div>
+      <div class="namesake__half"><span class="label">The wolf</span><h2>Reads the ground.</h2><p>It sees your whole business: the people, the customers, where things slow down.</p></div>
+    </div>
+    <div class="namesake__sea" data-ripple>
+      <span class="equation">Wolf<i>+</i>fin<i>=</i>Wolfinn</span>
+      <div class="orca orca--drift" data-orca></div>
+      <div class="namesake__half"><span class="label">The fin</span><h2>Works in the deep.</h2><p>Orcas are called the wolves of the sea. Out of sight, they do the heavy work.</p><p style="margin-top:1.6rem"><a class="btn btn--moon" data-email href="contact.html">Email us</a></p></div>
+    </div>
+  </section>
+</main>
+
+<div class="tide" id="tide" aria-hidden="true"><span class="tide__name label"></span><div class="orca" data-orca></div></div>
+
+<script src="js/scrollcraft.js"></script>
+<script src="js/orca.js"></script>
+<script src="js/site.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+</body>
+</html>

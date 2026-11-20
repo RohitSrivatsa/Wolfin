@@ -1,6 +1,8 @@
-# Wolfin, website brief
+# Wolfinn, website brief
 
-Interviewed. The answers are the founder's own words, lightly tidied. Status: direction chosen, mockups in progress, not yet building.
+The brand was renamed from Wolfin to **Wolfinn** (new wordmark in `assets/wolfinn-wordmark.png`). The live site is in `/site`.
+
+Interviewed. The answers are the founder's own words, lightly tidied. Status: first build done (`/site`). Founder asked to "keep it simple, not too much text, more visual and interactive", with the gap finder as the centrepiece.
 
 ## Direction
 - **Chosen:** Waterline, white version (round two, mockup 2). White sky above, the logo's teal water below, the moon, the wolf on its island, and the orca underneath.
