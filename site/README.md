@@ -13,15 +13,14 @@ Then open http://localhost:4500.
 ## Things to change
 
 - **Email address:** `EMAIL` at the top of `js/site.js` (currently rohit@wolfinn.org). The copy buttons, email links and the gap finder's pre-filled email all read from it.
-- **Light and dark mode:** the site opens in light mode. The switch in the top bar changes it, and the choice is remembered on every page. The dark colours are in the `:root[data-theme="dark"]` block near the top of `css/site.css`.
-- **Founder name:** on `about.html`, the signature currently just says "Founder".
+- **Light and dark mode:** the site opens in light mode. The switch in the top bar changes it, and the choice is remembered on every page. The dark colours are in the `:root[data-wf-theme="dark"]` block near the top of `css/site.css`. The site uses its own `data-wf-theme` attribute so nothing outside the site can flip the theme.
 - **Services:** six services (workflow automation, custom software, websites and web apps, software consulting, data analytics, AI assistants). The home tiles are in `index.html` (`.svc-grid`); the full list with mini flows is in `services.html`.
 - **The wolf's howl:** copying the email makes the wolf lift its head. The head is cut out of `img/wolf-island.svg` in `js/site.js` (look for `wolf-clip-head`).
 - **Contact composer options:** the problem and tool buttons are plain HTML in `contact.html`; the email wording is in `js/composer.js`.
 
 ## Files
 
-- `index.html`, `services.html`, `about.html`, `contact.html`: the main pages.
+- `index.html`, `services.html`, `contact.html`: the main pages.
 - `demo-automation.html`, `demo-software.html`, `demo-websites.html`, `demo-consulting.html`, `demo-analytics.html`, `demo-assistant.html`: one interactive demo per service, linked from the service tiles. Each demo keeps its own styles and script inside the page; shared demo styles are in `css/demo.css`.
 - `js/composer.js`: the Contact page composer that turns picks into a ready-to-send email.
 - `css/site.css`: all of the site's styling (colours are the tokens at the top).

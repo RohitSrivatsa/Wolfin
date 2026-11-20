@@ -53,8 +53,22 @@
   /* ---- light / dark ---------------------------------------------------- */
   // Light by default. The visitor's choice is saved and applied on every page
   // (the inline script in each page's <head> sets it before anything paints).
-  var root = document.documentElement;
-  function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+  // The site uses its own attribute, data-wf-theme, so a host page or browser
+  // extension that sets data-theme can never flip the colours on its own.
+  // The choice is kept in localStorage, and mirrored in window.name so it
+  // still follows the visitor from page to page where storage is blocked.
+  var root = document.documentElement, THEME_KEY = 'wolfinn-theme';
+  function stored() {
+    var t = null;
+    try { t = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (!t) { var m = /wolfinn-theme:(dark|light)/.exec(window.name || ''); if (m) t = m[1]; }
+    return t === 'dark' ? 'dark' : 'light';
+  }
+  function remember(t) {
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+    try { window.name = (window.name || '').replace(/\s*wolfinn-theme:(dark|light)/, '') + ' wolfinn-theme:' + t; } catch (e) {}
+  }
+  function isDark() { return root.getAttribute('data-wf-theme') === 'dark'; }
   function syncSwitch() {
     var dark = isDark();
     $$('.theme-switch').forEach(function (b) { b.setAttribute('aria-checked', dark ? 'true' : 'false'); });
@@ -62,8 +76,8 @@
     if (meta) meta.setAttribute('content', dark ? '#0C0F13' : '#FFFFFF');
   }
   function setTheme(t) {
-    root.setAttribute('data-theme', t);
-    try { localStorage.setItem('wolfinn-theme', t); } catch (e) {}
+    root.setAttribute('data-wf-theme', t);
+    remember(t);
     syncSwitch();
   }
   $$('.theme-switch').forEach(function (b) {
@@ -78,11 +92,10 @@
     });
   });
   // another tab changed the theme: follow it
-  window.addEventListener('storage', function (e) { if (e.key === 'wolfinn-theme' && e.newValue) { root.setAttribute('data-theme', e.newValue); syncSwitch(); } });
-  window.addEventListener('pageshow', function () {
-    try { var t = localStorage.getItem('wolfinn-theme'); if (t) root.setAttribute('data-theme', t); } catch (e) {}
-    syncSwitch();
-  });
+  window.addEventListener('storage', function (e) { if (e.key === THEME_KEY && e.newValue) { root.setAttribute('data-wf-theme', e.newValue); syncSwitch(); } });
+  // coming back with the browser's back button: re-apply the saved choice
+  window.addEventListener('pageshow', function () { root.setAttribute('data-wf-theme', stored()); syncSwitch(); });
+  root.setAttribute('data-wf-theme', stored());
   syncSwitch();
 
   /* ---- the wolf: inline it so the head can lift into a howl ------------ */
