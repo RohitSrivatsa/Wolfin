@@ -26,7 +26,7 @@
   $$('[data-copy-email]').forEach(function (b) {
     var note = document.getElementById(b.getAttribute('data-copy-email'));
     b.addEventListener('click', function () {
-      var ok = function () { if (note) note.textContent = 'Copied: ' + EMAIL; };
+      var ok = function () { if (note) note.textContent = 'Copied: ' + EMAIL; if (typeof howl === 'function') howl(); };
       var fail = function () { if (note) note.textContent = EMAIL; };
       try { navigator.clipboard.writeText(EMAIL).then(ok, fail); } catch (e) { fail(); }
     });
@@ -51,33 +51,80 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu && menu.classList.contains('is-open')) setMenu(false); });
 
   /* ---- light / dark ---------------------------------------------------- */
+  // Light by default. The visitor's choice is saved and applied on every page
+  // (the inline script in each page's <head> sets it before anything paints).
   var root = document.documentElement;
-  var darkMQ = window.matchMedia('(prefers-color-scheme: dark)');
-  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : darkMQ.matches; }
-  function syncToggle() {
+  function isDark() { return root.getAttribute('data-theme') === 'dark'; }
+  function syncSwitch() {
     var dark = isDark();
-    $$('.theme-toggle').forEach(function (b) {
-      b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-      b.setAttribute('aria-pressed', dark ? 'true' : 'false');
-    });
+    $$('.theme-switch').forEach(function (b) { b.setAttribute('aria-checked', dark ? 'true' : 'false'); });
     var meta = $('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', dark ? '#0C0F13' : '#FFFFFF');
   }
-  $$('.theme-toggle').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var next = isDark() ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('wolfinn-theme', next); } catch (e) {}
-      syncToggle();
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    try { localStorage.setItem('wolfinn-theme', t); } catch (e) {}
+    syncSwitch();
+  }
+  $$('.theme-switch').forEach(function (b) {
+    b.addEventListener('click', function () { setTheme(isDark() ? 'light' : 'dark'); });
+    // swipe the knob across on touch screens
+    var x0 = null;
+    b.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    b.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 12) { e.preventDefault(); setTheme(dx > 0 ? 'dark' : 'light'); }
     });
   });
-  if (darkMQ.addEventListener) darkMQ.addEventListener('change', syncToggle);
-  syncToggle();
+  // another tab changed the theme: follow it
+  window.addEventListener('storage', function (e) { if (e.key === 'wolfinn-theme' && e.newValue) { root.setAttribute('data-theme', e.newValue); syncSwitch(); } });
+  window.addEventListener('pageshow', function () {
+    try { var t = localStorage.getItem('wolfinn-theme'); if (t) root.setAttribute('data-theme', t); } catch (e) {}
+    syncSwitch();
+  });
+  syncSwitch();
+
+  /* ---- the wolf: inline it so the head can lift into a howl ------------ */
+  var wolfImgs = $$('img.wolf');
+  function howl() {
+    if (reduce) return;
+    $$('svg.wolf').forEach(function (w) {
+      w.classList.remove('is-howling'); void w.getBoundingClientRect(); w.classList.add('is-howling');
+      setTimeout(function () { w.classList.remove('is-howling'); }, 1800);
+    });
+  }
+  if (wolfImgs.length && window.fetch) {
+    fetch(wolfImgs[0].getAttribute('src')).then(function (r) { return r.ok ? r.text() : Promise.reject(); }).then(function (txt) {
+      var inner = txt.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+      var sprite = document.createElement('div');
+      sprite.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>' +
+        '<symbol id="wolf-shape" viewBox="0 0 722 491">' + inner + '</symbol>' +
+        '<clipPath id="wolf-clip-body"><path d="M0 0H372V90H722V491H0Z"/></clipPath>' +
+        '<clipPath id="wolf-clip-head"><path d="M360 -40H620V116H360Z"/></clipPath>' +
+        '</defs></svg>';
+      document.body.insertBefore(sprite.firstChild, document.body.firstChild);
+      wolfImgs.forEach(function (img) {
+        var ns = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('viewBox', '0 0 722 491');
+        svg.setAttribute('class', img.getAttribute('class'));
+        if (img.hasAttribute('data-depth')) svg.setAttribute('data-depth', img.getAttribute('data-depth'));
+        var alt = img.getAttribute('alt');
+        if (alt) { svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', alt); } else { svg.setAttribute('aria-hidden', 'true'); }
+        svg.innerHTML = '<g clip-path="url(#wolf-clip-body)"><use href="#wolf-shape" width="722" height="491"/></g>' +
+          '<g class="wolf-head" clip-path="url(#wolf-clip-head)"><use href="#wolf-shape" width="722" height="491"/></g>';
+        img.replaceWith(svg);
+      });
+      document.dispatchEvent(new Event('wolfinn:wolf'));
+    }).catch(function () {});
+  }
 
   /* ---- pointer depth on the scenes ------------------------------------- */
   if (fine && !reduce) {
     $$('[data-depth-scene]').forEach(function (scene) {
-      var layers = $$('[data-depth]', scene);
+      // looked up each time: the wolf image is swapped for an inline SVG after load
+      var layers = function () { return $$('[data-depth]', scene); };
       var raf = 0, nx = 0, ny = 0;
       scene.addEventListener('pointermove', function (e) {
         var r = scene.getBoundingClientRect();
@@ -85,13 +132,13 @@
         ny = (e.clientY - r.top) / r.height * 2 - 1;
         if (!raf) raf = requestAnimationFrame(function () {
           raf = 0;
-          layers.forEach(function (l) {
+          layers().forEach(function (l) {
             var d = parseFloat(l.getAttribute('data-depth')) || 0;
             l.style.transform = 'translate3d(' + (nx * d).toFixed(1) + 'px,' + (ny * d * 0.25).toFixed(1) + 'px,0)';
           });
         });
       });
-      scene.addEventListener('pointerleave', function () { layers.forEach(function (l) { l.style.transform = ''; }); });
+      scene.addEventListener('pointerleave', function () { layers().forEach(function (l) { l.style.transform = ''; }); });
     });
   }
 
@@ -134,7 +181,7 @@
       sheets: { t: 'Copying data between spreadsheets', s: ['New entry anywhere', 'Fields matched', 'Checked for mistakes', 'Synced everywhere', 'Weekly summary'], r: 'One source of truth. <em>No more copy and paste.</em>' },
       booking: { t: 'Booking appointments', s: ['Customer picks a time', 'Your calendar updated', 'Reminder the day before', 'Reschedules handled'], r: 'Customers book themselves. <em>Your calendar fills quietly.</em>' },
       quotes: { t: 'Writing quotes', s: ['Job details captured', 'Prices pulled from your list', 'Draft quote written', 'You approve in one click', 'Sent and followed up'], r: 'Quotes out the same day. <em>You only check and send.</em>' },
-      questions: { t: 'Answering the same questions', s: ['Question arrives', 'Answered from your own info', 'Tricky ones sent to you', 'Gaps in your info flagged'], r: 'Common questions answered instantly. <em>You take the interesting ones.</em>' },
+      questions: { t: 'Answering the same questions', s: ['Question arrives', 'Answered from your own info', 'Tricky ones sent to you', 'Missing info flagged'], r: 'Common questions answered instantly. <em>You take the interesting ones.</em>' },
       reports: { t: 'Putting together reports', s: ['Numbers pulled from your tools', 'Compared to last week', 'Highlights written up', 'Sent every Monday'], r: 'Your week on one page. <em>Without anyone building it.</em>' },
       social: { t: 'Posting on social media', s: ['Ideas from your week', 'Drafts in your voice', 'You approve', 'Scheduled and posted'], r: 'Present every week. <em>Without the Sunday scramble.</em>' }
     };
@@ -213,7 +260,7 @@
       later(function () {
         resultP.innerHTML = task.r;
         result.classList.add('is-on');
-        cta.href = mailto('A gap in my business', 'Hi Wolfinn,\n\nThe task I would hand off first: ' + task.t + '.\n\nAbout my business:\n');
+        cta.href = mailto('A problem in my business', 'Hi Wolfinn,\n\nThe task I would hand off first: ' + task.t + '.\n\nAbout my business:\n');
       }, start + task.s.length * 520 + 100);
       ran = true;
     }
