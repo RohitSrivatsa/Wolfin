@@ -48,17 +48,20 @@
     <div class="compose-sec__in">
       <div class="compose-sec__head">
         <h1 id="ct">Got a problem? Tell us about it.</h1>
-        <p>Pick what fits and we'll write the email for you. Nothing is sent until you press send.</p>
+        <p>Pick what fits and we'll write the email for you. Copy it, paste it into a new email, done.</p>
       </div>
       <div class="composer">
         <form class="composer__form" id="composer" autocomplete="on">
           <fieldset><legend>What's slowing you down?</legend><div class="pills" data-group="problems">
             <button class="pill-opt" type="button" aria-pressed="false">Answering calls and messages</button>
-            <button class="pill-opt" type="button" aria-pressed="false">Chasing payments</button>
-            <button class="pill-opt" type="button" aria-pressed="false">Copying data between tools</button>
             <button class="pill-opt" type="button" aria-pressed="false">Booking and scheduling</button>
+            <button class="pill-opt" type="button" aria-pressed="false">Copying data between tools</button>
             <button class="pill-opt" type="button" aria-pressed="false">Writing quotes or reports</button>
+            <button class="pill-opt" type="button" aria-pressed="false">Keeping track of customers</button>
+            <button class="pill-opt" type="button" aria-pressed="false">Managing stock or orders</button>
+            <button class="pill-opt" type="button" aria-pressed="false">Too much paperwork</button>
             <button class="pill-opt" type="button" aria-pressed="false">Making sense of my numbers</button>
+            <button class="pill-opt" type="button" aria-pressed="false">Social media and marketing</button>
             <button class="pill-opt" type="button" aria-pressed="false">I need a website or app</button>
             <button class="pill-opt" type="button" aria-pressed="false">Something else</button>
           </div></fieldset>
@@ -66,6 +69,7 @@
             <button class="pill-opt" type="button" aria-pressed="false">Spreadsheets</button>
             <button class="pill-opt" type="button" aria-pressed="false">Paper and notes</button>
             <button class="pill-opt" type="button" aria-pressed="false">Email</button>
+            <button class="pill-opt" type="button" aria-pressed="false">WhatsApp or texts</button>
             <button class="pill-opt" type="button" aria-pressed="false">Accounting software</button>
             <button class="pill-opt" type="button" aria-pressed="false">A booking system</button>
             <button class="pill-opt" type="button" aria-pressed="false">Not sure</button>
@@ -80,30 +84,19 @@
           <div class="letter-card__meta"><span><b>To</b> <span data-email data-email-text>rohit@wolfinn.org</span></span><span><b>Subject</b> <span id="c-subject"></span></span></div>
           <pre class="letter-card__body" id="c-body"></pre>
           <div class="letter-card__actions">
-            <a class="btn btn--moon" id="c-send" href="#">Open in my email</a>
-            <button class="btn btn--ghost" type="button" id="c-copy">Copy message</button>
+            <button class="btn btn--moon" type="button" id="c-copy">Copy message</button>
           </div>
-          <p class="copy-note" id="c-note"></p>
+          <p class="copy-note" id="c-note" aria-live="polite"></p>
+          <div class="letter-card__direct"><span>Nothing fits? Email directly:</span> <a data-email data-email-text data-subject="A problem in my business" href="#">rohit@wolfinn.org</a> <button class="linkbtn" type="button" data-copy-email="c-note">Copy</button></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="close close--alt" data-depth-scene aria-labelledby="ct2">
-    <div class="scene">
-      <div class="moon-plane"><div class="moon pp" data-depth="5"></div></div>
-      <div class="wolf-plane"><img class="wolf pp" data-depth="12" src="img/wolf-island.svg" width="722" height="491" alt=""></div>
-      <div class="water" data-ripple></div>
-      <div class="orca orca--drift" data-orca></div>
-    </div>
-    <div class="close__copy"><h2 id="ct2">Prefer to write it yourself?</h2><p>Email Rohit directly. Replies come from a real person.</p></div>
-    <div class="close__mail">
-      <a class="mailline" data-email data-email-text data-subject="A problem in my business" href="#">rohit@wolfinn.org</a>
-      <button class="btn btn--light" type="button" data-copy-email="copy-note-c">Copy email</button>
-      <span class="copy-note" id="copy-note-c" aria-live="polite"></span>
-    </div>
-    <div class="prompts"><span class="label">Helpful to include</span><ol><li>What your business does</li><li>The task that eats your week</li><li>The tools you use today</li></ol></div>
-    <footer class="foot"><span>© Wolfinn</span><nav aria-label="Footer"><a href="services.html">Services</a><a href="index.html">Home</a></nav></footer>
+  <section class="sea-foot" aria-label="Footer">
+    <div class="water" data-ripple></div>
+    <div class="orca orca--drift" data-orca></div>
+    <footer class="foot"><span>© Wolfinn</span><nav aria-label="Footer"><a href="index.html">Home</a><a href="services.html">Services</a><a href="contact.html">Contact</a></nav></footer>
   </section>
 </main>
 

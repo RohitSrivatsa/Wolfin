@@ -46,104 +46,161 @@
   <section class="demo-head">
     <a class="demo-back btn btn--ghost" href="services.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>See all services</a>
     <div class="demo-head__row">
-      <div><span class="demo-kicker">Live demo · sample data</span><h1>Software consulting</h1><p>Answer three questions and get a setup plan.</p></div>
-      <p class="demo-how"><b>Try it:</b> change your answers and watch the plan change.</p>
+      <div><span class="demo-kicker">Live demo · sample data</span><h1>Software consulting</h1><p>A tool check-up: what to keep, replace, connect or drop.</p></div>
+      <p class="demo-how"><b>Try it:</b> pick a sample business, then press Get the advice.</p>
     </div>
   </section>
 
 <style>
-.qs { padding: clamp(20px, 3vw, 32px); display: grid; gap: 26px; align-content: start; }
-.q h2 { margin: 6px 0 12px; font: 600 1.2rem/1.2 var(--sc-font-display); letter-spacing: -0.01em; }
-.plan { padding: clamp(20px, 3vw, 32px); display: grid; gap: 18px; align-content: start; }
-.plan h2 { margin: 6px 0 0; font: 600 1.6rem/1.1 var(--sc-font-display); color: var(--water-ink); letter-spacing: -0.02em; }
-.plan__sum { margin: 0; color: var(--foam); }
-.stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.tool { border: 1px solid rgba(163,201,206,.2); border-radius: 14px; padding: 14px; background: rgba(2,25,29,.35); animation: pop 450ms var(--ease) both; }
-.tool span { font: 500 .68rem/1 var(--sc-font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--moon); }
-.tool b { display: block; margin: 8px 0 4px; color: var(--water-ink); font-weight: 600; }
-.tool p { margin: 0; font-size: .86rem; color: var(--foam); }
-@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.weeks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.weeks li { display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: baseline; border-top: 1px solid rgba(163,201,206,.16); padding-top: 10px; }
-.weeks b { font: 500 .72rem/1 var(--sc-font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--foam); }
-.weeks span { color: var(--mist); font-size: .95rem; }
-.plan__fine { margin: 0; font-size: .82rem; color: var(--foam); opacity: .85; }
-@media (max-width: 560px) { .stack { grid-template-columns: 1fr; } }
+.ck-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.ck-today { padding: clamp(18px, 2.6vw, 28px); display: grid; gap: 14px; align-content: start; }
+.ck-today h2, .ck-after h2 { margin: 6px 0 0; font: 600 1.4rem/1.1 var(--sc-font-display); letter-spacing: -0.02em; }
+.ck-tools { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ck-tool { position: relative; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; background: var(--surface); transition: opacity 400ms, border-color 400ms; animation: ckin 400ms var(--ease) both; }
+@keyframes ckin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.ck-tool b { display: block; font-weight: 600; font-size: .95rem; padding-right: 76px; }
+.ck-tool span { display: block; font-size: .82rem; color: var(--ink-3); margin-top: 2px; }
+.ck-tool .issue { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: .78rem; font-weight: 600; color: #B4361E; }
+:root[data-wf-theme="dark"] .ck-tool .issue { color: #FF8A73; }
+.ck-tool .issue::before { content: "!"; display: grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; background: currentColor; color: var(--surface); font-size: .7rem; }
+.stamp { position: absolute; top: 10px; right: 10px; font: 600 .66rem/1 var(--sc-font-mono); letter-spacing: .1em; text-transform: uppercase; padding: 5px 8px; border-radius: 6px; border: 1.5px solid currentColor; opacity: 0; transform: scale(1.4) rotate(-6deg); transition: opacity 260ms, transform 360ms var(--ease); }
+.ck-tool.is-stamped .stamp { opacity: 1; transform: rotate(-4deg); }
+.stamp--keep { color: #1F8A5B; } .stamp--replace { color: var(--moon-text); } .stamp--connect { color: #2477A8; } .stamp--drop { color: var(--ink-3); }
+:root[data-wf-theme="dark"] .stamp--keep { color: #5FD39B; } :root[data-wf-theme="dark"] .stamp--replace { color: var(--moon); } :root[data-wf-theme="dark"] .stamp--connect { color: #6CB8E6; }
+.ck-tool.is-dropped { opacity: .45; }
+.ck-tool.is-dropped b { text-decoration: line-through; }
+.ck-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: .8rem; color: var(--ink-3); }
+.ck-after { padding: clamp(18px, 2.6vw, 28px); display: grid; gap: 16px; align-content: start; position: relative; min-height: 420px; }
+.ck-after h2 { color: var(--water-ink); }
+.ck-veil { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 30px; color: var(--foam); }
+.ck-after.is-on .ck-veil { display: none; }
+.ck-after:not(.is-on) > :not(.ck-veil) { visibility: hidden; }
+.ck-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ck-metric { border: 1px solid rgba(163,201,206,.2); border-radius: 14px; padding: 12px; background: rgba(2,25,29,.35); }
+.ck-metric span { display: block; font-size: .78rem; color: var(--foam); }
+.ck-metric strong { display: flex; align-items: baseline; gap: 6px; margin-top: 6px; font: 600 1.5rem/1 var(--sc-font-display); color: var(--water-ink); font-variant-numeric: tabular-nums; }
+.ck-metric s { font-size: .95rem; color: var(--foam); font-weight: 500; text-decoration-color: var(--moon); }
+.ck-new { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ck-new li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; border-top: 1px solid rgba(163,201,206,.16); padding-top: 9px; color: var(--mist); font-size: .92rem; animation: ckin 400ms var(--ease) both; }
+.ck-new li i { width: 26px; height: 26px; border-radius: 8px; background: rgba(242,122,46,.18); display: grid; place-items: center; color: var(--moon); font-style: normal; font-size: .8rem; font-weight: 700; }
+.ck-new li b { color: var(--water-ink); font-weight: 600; display: block; }
+.ck-road { display: flex; flex-wrap: wrap; gap: 8px; }
+.ck-road span { font-size: .82rem; color: var(--mist); border: 1px solid rgba(163,201,206,.25); border-radius: 999px; padding: 7px 12px; }
+.ck-road span b { color: var(--moon); font-weight: 600; margin-right: 4px; }
+.ck-fine { margin: 0; font-size: .8rem; color: var(--foam); }
+@media (max-width: 600px) { .ck-tools { grid-template-columns: 1fr; } .ck-metrics { grid-template-columns: 1fr 1fr 1fr; } .ck-metric strong { font-size: 1.2rem; } }
 </style>
 
 <section class="demo-stage">
-  <div class="split">
-    <div class="panel qs">
-      <span class="panel__label">Three quick questions</span>
-      <div class="q"><h2>How big is your team?</h2><div class="pills" role="radiogroup" aria-label="Team size" data-q="team">
-        <button class="pill-opt" type="button" role="radio" aria-checked="true" data-v="solo">Just me</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="small">2 to 10</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="mid">11 to 50</button></div></div>
-      <div class="q"><h2>What's the biggest headache?</h2><div class="pills" role="radiogroup" aria-label="Biggest headache" data-q="need">
-        <button class="pill-opt" type="button" role="radio" aria-checked="true" data-v="paid">Getting paid</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="organised">Staying organised</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="customers">Keeping up with customers</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="numbers">Understanding the numbers</button></div></div>
-      <div class="q"><h2>Where does the work happen?</h2><div class="pills" role="radiogroup" aria-label="Where you work" data-q="where">
-        <button class="pill-opt" type="button" role="radio" aria-checked="true" data-v="road">On the road</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="office">In an office</button>
-        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="both">Both</button></div></div>
+  <div class="ck-bar">
+    <div class="pills" role="radiogroup" aria-label="Sample business">
+      <button class="pill-opt" type="button" role="radio" aria-checked="true" data-biz="cafe">A café</button>
+      <button class="pill-opt" type="button" role="radio" aria-checked="false" data-biz="trades">A trades business</button>
+      <button class="pill-opt" type="button" role="radio" aria-checked="false" data-biz="clinic">A small clinic</button>
     </div>
-    <div class="panel panel--deep plan" aria-live="polite">
-      <span class="panel__label">Your setup plan</span>
-      <h2 id="plan-title">A simple setup for one</h2>
-      <p class="plan__sum" id="plan-sum"></p>
-      <div class="stack" id="stack"></div>
-      <ol class="weeks" id="weeks"></ol>
-      <p class="plan__fine">Example plan. Real advice starts with a conversation about how you actually work.</p>
+    <button class="btn btn--moon" type="button" id="ck-go">Get the advice</button>
+  </div>
+  <div class="split">
+    <div class="panel ck-today">
+      <span class="panel__label">Today · what they use</span>
+      <h2 id="ck-title">The café's tools</h2>
+      <ul class="ck-tools" id="ck-tools"></ul>
+      <div class="ck-legend"><span><b class="stamp--keep">Keep</b> works well</span><span><b class="stamp--replace">Replace</b> swap for something better</span><span><b class="stamp--connect">Connect</b> link it up</span><span><b>Drop</b> not needed</span></div>
+    </div>
+    <div class="panel panel--deep ck-after" id="ck-after" aria-live="polite">
+      <div class="ck-veil"><p>Press <b>Get the advice</b> to see what we'd keep, replace, connect or drop.</p></div>
+      <span class="panel__label">Our advice · after</span>
+      <h2>Simpler, and joined up</h2>
+      <div class="ck-metrics">
+        <div class="ck-metric"><span>Tools to manage</span><strong id="m-tools"></strong></div>
+        <div class="ck-metric"><span>Places info is typed</span><strong id="m-typed"></strong></div>
+        <div class="ck-metric"><span>Problems fixed</span><strong id="m-fixed"></strong></div>
+      </div>
+      <ul class="ck-new" id="ck-new"></ul>
+      <div class="ck-road" id="ck-road"></div>
+      <p class="ck-fine">Sample business. Real advice starts with a conversation and a look at how you actually work.</p>
     </div>
   </div>
 </section>
 
 <script>
 (function () {
-  var state = { team: 'solo', need: 'paid', where: 'road' };
-  var NEED = {
-    paid: { k: 'Invoicing', b: 'Accounting with automatic reminders', p: 'e.g. QuickBooks or Xero, with card payment links on every invoice.', w: 'Invoices and reminders switched on' },
-    organised: { k: 'Jobs and tasks', b: 'One shared job list', p: 'e.g. a simple job tracker, or a custom one built around your steps.', w: 'Every job in one place, nothing on sticky notes' },
-    customers: { k: 'Customers', b: 'A lightweight CRM', p: 'e.g. HubSpot free tier, with enquiries flowing in from your website.', w: 'Every enquiry captured and followed up' },
-    numbers: { k: 'Reporting', b: 'A live dashboard', p: 'Your sales and costs pulled into one page that updates itself.', w: 'A Monday dashboard you actually read' }
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var BIZ = {
+    cafe: { title: "The café's tools", typedBefore: 4, typedAfter: 1, tools: [
+      { n: 'Paper booking diary', f: 'Table bookings', i: 'Double bookings', a: 'replace' },
+      { n: 'Instagram messages', f: 'Bookings and questions', i: 'Missed messages', a: 'connect' },
+      { n: 'Till system', f: 'Taking orders', i: 'No link to stock', a: 'replace' },
+      { n: 'Stock spreadsheet', f: 'Counting stock', i: 'Typed twice', a: 'replace' },
+      { n: 'Card reader', f: 'Payments', a: 'keep' },
+      { n: 'Rota in a group chat', f: 'Staff shifts', i: 'Gets lost', a: 'replace' },
+      { n: 'Newsletter tool', f: 'Marketing', i: 'Rarely used', a: 'drop' },
+      { n: 'Accounting software', f: 'The books', i: 'Typed by hand', a: 'connect' } ],
+      after: [['One till that tracks stock', 'Orders and stock in one place, so counts update themselves.'], ['Online bookings', 'From the website and Instagram, straight into one diary.'], ['A rota app', 'Shifts, swaps and holidays where staff can see them.'], ['Accounts that fill themselves', 'Sales flow from the till into the books every night.']],
+      road: ['Bookings first', 'Till and stock', 'Rota and accounts'] },
+    trades: { title: "The trades business's tools", typedBefore: 5, typedAfter: 1, tools: [
+      { n: 'Paper job sheets', f: 'Job details', i: 'Lost in the van', a: 'replace' },
+      { n: 'Texts with customers', f: 'Arranging visits', i: 'Nothing on record', a: 'connect' },
+      { n: 'Quotes in a spreadsheet', f: 'Pricing jobs', i: 'Slow to send', a: 'replace' },
+      { n: 'Separate invoicing tool', f: 'Billing', i: 'Typed twice', a: 'replace' },
+      { n: 'Shared calendar', f: 'Who is where', a: 'keep' },
+      { n: 'Phone notes app', f: 'Reminders', i: 'Only one person sees it', a: 'drop' },
+      { n: 'Accounting software', f: 'The books', i: 'Typed by hand', a: 'connect' } ],
+      after: [['One job app', 'Job sheet, photos, quote and invoice in one place, on the phone.'], ['Customer messages on record', 'Texts and calls logged against each job.'], ['Quotes in minutes', 'Templates with your prices, sent from the job.'], ['Accounts that fill themselves', 'Paid invoices flow into the books automatically.']],
+      road: ['Job app set up', 'Quotes and invoices', 'Accounts linked'] },
+    clinic: { title: "The clinic's tools", typedBefore: 4, typedAfter: 1, tools: [
+      { n: 'Paper intake forms', f: 'New patient details', i: 'Typed up by hand', a: 'replace' },
+      { n: 'Phone-only bookings', f: 'Appointments', i: 'Busy line', a: 'replace' },
+      { n: 'Booking software', f: 'The diary', a: 'keep' },
+      { n: 'Reminder texts by hand', f: 'Reducing no-shows', i: 'Often forgotten', a: 'replace' },
+      { n: 'Patient spreadsheet', f: 'Contact list', i: 'Out of date', a: 'drop' },
+      { n: 'Shared inbox', f: 'Questions', a: 'keep' },
+      { n: 'Accounting software', f: 'The books', i: 'Typed by hand', a: 'connect' } ],
+      after: [['Online forms', 'Patients fill them in before the visit, straight into their record.'], ['Online booking', 'Open around the clock, into the diary you already use.'], ['Automatic reminders', 'Texts go out the day before, every time.'], ['Accounts that fill themselves', 'Payments flow into the books automatically.']],
+      road: ['Online booking', 'Forms and reminders', 'Accounts linked'] }
   };
-  var WHERE = {
-    road: { k: 'On the go', b: 'Phone-first everything', p: 'Apps that work offline and sync when you are back in signal.' },
-    office: { k: 'At the desk', b: 'Shared drive and inbox', p: 'One place for files, one inbox the whole team can see.' },
-    both: { k: 'Anywhere', b: 'Cloud tools with mobile apps', p: 'The same information on the van, the laptop and at home.' }
-  };
-  var TEAM = {
-    solo: { t: 'A simple setup for one', s: 'Fewer tools, set up properly, so admin takes minutes, not evenings.', k: 'Basics', b: 'Email, calendar and files in one account', p: 'e.g. Google Workspace or Microsoft 365, set up once and tidy.' },
-    small: { t: 'A setup for a small team', s: 'Everyone sees the same jobs, customers and calendar, without stepping on each other.', k: 'Team', b: 'Shared calendar and roles', p: 'Who can see what, and who gets which jobs, decided once.' },
-    mid: { t: 'A setup that scales', s: 'Clear systems for each department, joined up so data is only typed once.', k: 'Systems', b: 'Connected tools, one source of truth', p: 'The key tools linked so information flows between them.' }
-  };
-  function render() {
-    var n = NEED[state.need], w = WHERE[state.where], t = TEAM[state.team];
-    document.getElementById('plan-title').textContent = t.t;
-    document.getElementById('plan-sum').textContent = t.s;
-    var cards = [t, n, w, { k: 'Automation', b: 'The boring bits, automated', p: 'Reminders, follow-ups and data entry handled between your tools.' }];
-    var st = document.getElementById('stack'); st.innerHTML = '';
-    cards.forEach(function (c, i) {
-      var d = document.createElement('div'); d.className = 'tool'; d.style.animationDelay = (i * 70) + 'ms';
-      d.innerHTML = '<span></span><b></b><p></p>';
-      d.children[0].textContent = c.k; d.children[1].textContent = c.b; d.children[2].textContent = c.p; st.appendChild(d);
+  var LABEL = { keep: 'Keep', replace: 'Replace', connect: 'Connect', drop: 'Drop' };
+  var cur = 'cafe', timers = [];
+  var list = document.getElementById('ck-tools'), after = document.getElementById('ck-after');
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+  function showToday() {
+    clear(); var b = BIZ[cur];
+    document.getElementById('ck-title').textContent = b.title;
+    after.classList.remove('is-on'); list.innerHTML = '';
+    b.tools.forEach(function (t, i) {
+      var li = document.createElement('li'); li.className = 'ck-tool'; li.style.animationDelay = (i * 50) + 'ms';
+      li.innerHTML = '<span class="stamp stamp--' + t.a + '">' + LABEL[t.a] + '</span><b></b><span></span>' + (t.i ? '<span class="issue"></span>' : '');
+      li.children[1].textContent = t.n; li.children[2].textContent = t.f; if (t.i) li.children[3].textContent = t.i;
+      list.appendChild(li);
     });
-    var weeks = [['Week 1', 'Listen, map how work flows today, pick the tools'], ['Week 2', 'Set up, move your data across, connect the tools'], ['Week 3', n.w + '. Team shown how, in plain English']];
-    var wl = document.getElementById('weeks'); wl.innerHTML = '';
-    weeks.forEach(function (x) { var li = document.createElement('li'); li.innerHTML = '<b></b><span></span>'; li.children[0].textContent = x[0]; li.children[1].textContent = x[1]; wl.appendChild(li); });
+    document.getElementById('ck-go').textContent = 'Get the advice';
   }
-  document.querySelectorAll('[data-q]').forEach(function (g) {
-    var opts = g.querySelectorAll('.pill-opt');
-    opts.forEach(function (o) {
-      o.addEventListener('click', function () {
-        opts.forEach(function (x) { x.setAttribute('aria-checked', x === o ? 'true' : 'false'); });
-        state[g.getAttribute('data-q')] = o.getAttribute('data-v'); render();
-      });
+  function advise() {
+    clear(); var b = BIZ[cur], items = list.querySelectorAll('.ck-tool');
+    items.forEach(function (li) { li.classList.remove('is-stamped', 'is-dropped'); });
+    b.tools.forEach(function (t, i) {
+      timers.push(setTimeout(function () { items[i].classList.add('is-stamped'); if (t.a === 'drop') items[i].classList.add('is-dropped'); }, reduce ? 0 : 150 + i * 160));
+    });
+    timers.push(setTimeout(function () {
+      var fixed = b.tools.filter(function (t) { return t.i; }).length;
+      document.getElementById('m-tools').innerHTML = '<s>' + b.tools.length + '</s>' + (b.after.length + b.tools.filter(function (t) { return t.a === 'keep'; }).length);
+      document.getElementById('m-typed').innerHTML = '<s>' + b.typedBefore + '</s>' + b.typedAfter;
+      document.getElementById('m-fixed').textContent = fixed + ' of ' + fixed;
+      var nl = document.getElementById('ck-new'); nl.innerHTML = '';
+      b.after.forEach(function (x, i) { var li = document.createElement('li'); li.style.animationDelay = (i * 90) + 'ms'; li.innerHTML = '<i>' + (i + 1) + '</i><div><b></b><span></span></div>'; li.querySelector('b').textContent = x[0]; li.querySelector('span').textContent = x[1]; nl.appendChild(li); });
+      document.getElementById('ck-road').innerHTML = b.road.map(function (r, i) { return '<span><b>Week ' + (i + 1) + '</b>' + r + '</span>'; }).join('');
+      after.classList.add('is-on');
+      document.getElementById('ck-go').textContent = 'Show it again';
+    }, reduce ? 0 : 200 + b.tools.length * 160));
+  }
+  document.querySelectorAll('[data-biz]').forEach(function (o, _, all) {
+    o.addEventListener('click', function () {
+      document.querySelectorAll('[data-biz]').forEach(function (x) { x.setAttribute('aria-checked', x === o ? 'true' : 'false'); });
+      cur = o.getAttribute('data-biz'); showToday();
     });
   });
-  render();
+  document.getElementById('ck-go').addEventListener('click', advise);
+  showToday();
 })();
 </script>
 
