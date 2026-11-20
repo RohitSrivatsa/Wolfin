@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Software consulting demo · Wolfinn</title>
+<meta name="description" content="Software consulting by Wolfinn: an interactive demo. Answer three questions and get a setup plan.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:title" content="Wolfinn">
+<meta property="og:description" content="Software and AI that quietly takes the busywork off your plate.">
+<meta property="og:image" content="img/mark-512.png">
+<script>try{var t=localStorage.getItem('wolfinn-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/scrollcraft.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="bar__brand" href="index.html" aria-label="Wolfinn home"><img class="logo-light" src="img/wolfinn-wordmark-ink.png" width="576" height="123" alt="Wolfinn"><img class="logo-dark" src="img/wolfinn-wordmark-light.png" width="576" height="123" alt="Wolfinn"></a>
+  <div class="bar__right">
+    <nav class="bar__nav" aria-label="Main"><a href="index.html">Home</a><a href="services.html" aria-current="page">Services</a><a href="about.html">About</a><a class="btn btn--ink" href="contact.html">Contact</a></nav>
+    <button class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><span class="theme-switch__knob"></span></button>
+    <button class="bar__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Menu">
+    <a href="index.html">Home</a>
+    
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="menu__foot"><span class="label">Email</span><a data-email data-email-text href="contact.html" style="color:#F2EFEA">rohit@wolfinn.org</a></div>
+  <div class="orca orca--drift" data-orca></div>
+</div>
+
+<main id="main" class="demo">
+  <section class="demo-head">
+    <a class="demo-back" href="services.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>All services</a>
+    <div class="demo-head__row">
+      <div><span class="demo-kicker">Live demo · sample data</span><h1>Software consulting</h1><p>Answer three questions and get a setup plan.</p></div>
+      <p class="demo-how"><b>Try it:</b> change your answers and watch the plan change.</p>
+    </div>
+  </section>
+
+<style>
+.qs { padding: clamp(20px, 3vw, 32px); display: grid; gap: 26px; align-content: start; }
+.q h2 { margin: 6px 0 12px; font: 600 1.2rem/1.2 var(--sc-font-display); letter-spacing: -0.01em; }
+.plan { padding: clamp(20px, 3vw, 32px); display: grid; gap: 18px; align-content: start; }
+.plan h2 { margin: 6px 0 0; font: 600 1.6rem/1.1 var(--sc-font-display); color: var(--water-ink); letter-spacing: -0.02em; }
+.plan__sum { margin: 0; color: var(--foam); }
+.stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.tool { border: 1px solid rgba(163,201,206,.2); border-radius: 14px; padding: 14px; background: rgba(2,25,29,.35); animation: pop 450ms var(--ease) both; }
+.tool span { font: 500 .68rem/1 var(--sc-font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--moon); }
+.tool b { display: block; margin: 8px 0 4px; color: var(--water-ink); font-weight: 600; }
+.tool p { margin: 0; font-size: .86rem; color: var(--foam); }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.weeks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.weeks li { display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: baseline; border-top: 1px solid rgba(163,201,206,.16); padding-top: 10px; }
+.weeks b { font: 500 .72rem/1 var(--sc-font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--foam); }
+.weeks span { color: var(--mist); font-size: .95rem; }
+.plan__fine { margin: 0; font-size: .82rem; color: var(--foam); opacity: .85; }
+@media (max-width: 560px) { .stack { grid-template-columns: 1fr; } }
+</style>
+
+<section class="demo-stage">
+  <div class="split">
+    <div class="panel qs">
+      <span class="panel__label">Three quick questions</span>
+      <div class="q"><h2>How big is your team?</h2><div class="pills" role="radiogroup" aria-label="Team size" data-q="team">
+        <button class="pill-opt" type="button" role="radio" aria-checked="true" data-v="solo">Just me</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="small">2 to 10</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="mid">11 to 50</button></div></div>
+      <div class="q"><h2>What's the biggest headache?</h2><div class="pills" role="radiogroup" aria-label="Biggest headache" data-q="need">
+        <button class="pill-opt" type="button" role="radio" aria-checked="true" data-v="paid">Getting paid</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="organised">Staying organised</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="customers">Keeping up with customers</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="numbers">Understanding the numbers</button></div></div>
+      <div class="q"><h2>Where does the work happen?</h2><div class="pills" role="radiogroup" aria-label="Where you work" data-q="where">
+        <button class="pill-opt" type="button" role="radio" aria-checked="true" data-v="road">On the road</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="office">In an office</button>
+        <button class="pill-opt" type="button" role="radio" aria-checked="false" data-v="both">Both</button></div></div>
+    </div>
+    <div class="panel panel--deep plan" aria-live="polite">
+      <span class="panel__label">Your setup plan</span>
+      <h2 id="plan-title">A simple setup for one</h2>
+      <p class="plan__sum" id="plan-sum"></p>
+      <div class="stack" id="stack"></div>
+      <ol class="weeks" id="weeks"></ol>
+      <p class="plan__fine">Example plan. Real advice starts with a conversation about how you actually work.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var state = { team: 'solo', need: 'paid', where: 'road' };
+  var NEED = {
+    paid: { k: 'Invoicing', b: 'Accounting with automatic reminders', p: 'e.g. QuickBooks or Xero, with card payment links on every invoice.', w: 'Invoices and reminders switched on' },
+    organised: { k: 'Jobs and tasks', b: 'One shared job list', p: 'e.g. a simple job tracker, or a custom one built around your steps.', w: 'Every job in one place, nothing on sticky notes' },
+    customers: { k: 'Customers', b: 'A lightweight CRM', p: 'e.g. HubSpot free tier, with enquiries flowing in from your website.', w: 'Every enquiry captured and followed up' },
+    numbers: { k: 'Reporting', b: 'A live dashboard', p: 'Your sales and costs pulled into one page that updates itself.', w: 'A Monday dashboard you actually read' }
+  };
+  var WHERE = {
+    road: { k: 'On the go', b: 'Phone-first everything', p: 'Apps that work offline and sync when you are back in signal.' },
+    office: { k: 'At the desk', b: 'Shared drive and inbox', p: 'One place for files, one inbox the whole team can see.' },
+    both: { k: 'Anywhere', b: 'Cloud tools with mobile apps', p: 'The same information on the van, the laptop and at home.' }
+  };
+  var TEAM = {
+    solo: { t: 'A simple setup for one', s: 'Fewer tools, set up properly, so admin takes minutes, not evenings.', k: 'Basics', b: 'Email, calendar and files in one account', p: 'e.g. Google Workspace or Microsoft 365, set up once and tidy.' },
+    small: { t: 'A setup for a small team', s: 'Everyone sees the same jobs, customers and calendar, without stepping on each other.', k: 'Team', b: 'Shared calendar and roles', p: 'Who can see what, and who gets which jobs, decided once.' },
+    mid: { t: 'A setup that scales', s: 'Clear systems for each department, joined up so data is only typed once.', k: 'Systems', b: 'Connected tools, one source of truth', p: 'The key tools linked so information flows between them.' }
+  };
+  function render() {
+    var n = NEED[state.need], w = WHERE[state.where], t = TEAM[state.team];
+    document.getElementById('plan-title').textContent = t.t;
+    document.getElementById('plan-sum').textContent = t.s;
+    var cards = [t, n, w, { k: 'Automation', b: 'The boring bits, automated', p: 'Reminders, follow-ups and data entry handled between your tools.' }];
+    var st = document.getElementById('stack'); st.innerHTML = '';
+    cards.forEach(function (c, i) {
+      var d = document.createElement('div'); d.className = 'tool'; d.style.animationDelay = (i * 70) + 'ms';
+      d.innerHTML = '<span></span><b></b><p></p>';
+      d.children[0].textContent = c.k; d.children[1].textContent = c.b; d.children[2].textContent = c.p; st.appendChild(d);
+    });
+    var weeks = [['Week 1', 'Listen, map how work flows today, pick the tools'], ['Week 2', 'Set up, move your data across, connect the tools'], ['Week 3', n.w + '. Team shown how, in plain English']];
+    var wl = document.getElementById('weeks'); wl.innerHTML = '';
+    weeks.forEach(function (x) { var li = document.createElement('li'); li.innerHTML = '<b></b><span></span>'; li.children[0].textContent = x[0]; li.children[1].textContent = x[1]; wl.appendChild(li); });
+  }
+  document.querySelectorAll('[data-q]').forEach(function (g) {
+    var opts = g.querySelectorAll('.pill-opt');
+    opts.forEach(function (o) {
+      o.addEventListener('click', function () {
+        opts.forEach(function (x) { x.setAttribute('aria-checked', x === o ? 'true' : 'false'); });
+        state[g.getAttribute('data-q')] = o.getAttribute('data-v'); render();
+      });
+    });
+  });
+  render();
+})();
+</script>
+
+
+  <section class="demo-cta" aria-labelledby="cta-title">
+    <div class="water" data-ripple></div>
+    <div class="demo-cta__in">
+      <div><h2 id="cta-title">Want this in your business?</h2><p>Tell us what you'd want it to do. One email starts it.</p></div>
+      <div class="demo-cta__actions">
+        <a class="btn btn--moon" data-email data-subject="Software consulting for my business" href="contact.html">Email about this</a>
+        <a class="btn btn--ghost" href="demo-analytics.html">Next demo: Data analytics</a>
+      </div>
+    </div>
+    <div class="orca orca--drift" data-orca></div>
+    <footer class="foot"><span>© Wolfinn</span><nav aria-label="Footer"><a href="index.html">Home</a><a href="services.html">Services</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav></footer>
+  </section>
+</main>
+
+<script src="js/scrollcraft.js"></script>
+<script src="js/orca.js"></script>
+<script src="js/site.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+</body>
+</html>

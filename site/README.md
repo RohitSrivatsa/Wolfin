@@ -17,11 +17,13 @@ Then open http://localhost:4500.
 - **Founder name:** on `about.html`, the signature currently just says "Founder".
 - **Services:** six services (workflow automation, custom software, websites and web apps, software consulting, data analytics, AI assistants). The home tiles are in `index.html` (`.svc-grid`); the full list with mini flows is in `services.html`.
 - **The wolf's howl:** copying the email makes the wolf lift its head. The head is cut out of `img/wolf-island.svg` in `js/site.js` (look for `wolf-clip-head`).
-- **Try it tasks:** edit `TASKS` in `js/site.js`. Each task has a name, its steps and a result line. `GUESS` maps typed words to the closest task.
+- **Contact composer options:** the problem and tool buttons are plain HTML in `contact.html`; the email wording is in `js/composer.js`.
 
 ## Files
 
-- `index.html`, `try.html` (Try it: the interactive problem finder), `services.html`, `about.html`, `contact.html`: the five pages.
+- `index.html`, `services.html`, `about.html`, `contact.html`: the main pages.
+- `demo-automation.html`, `demo-software.html`, `demo-websites.html`, `demo-consulting.html`, `demo-analytics.html`, `demo-assistant.html`: one interactive demo per service, linked from the service tiles. Each demo keeps its own styles and script inside the page; shared demo styles are in `css/demo.css`.
+- `js/composer.js`: the Contact page composer that turns picks into a ready-to-send email.
 - `css/site.css`: all of the site's styling (colours are the tokens at the top).
 - `css/scrollcraft.css`, `js/scrollcraft.js`: the scroll engine (reveals and hero parallax). Don't edit these.
 - `js/orca.js`: the vector orca. Its tail is a separate piece so it can flap.
