@@ -48,7 +48,7 @@
     <div class="compose-sec__in">
       <div class="compose-sec__head">
         <h1 id="ct">Got a problem? Tell us about it.</h1>
-        <p>Pick what fits and we'll write the email for you. Copy it, paste it into a new email, done.</p>
+        <p>Pick what fits, add your email, and send. We'll write the message for you.</p>
       </div>
       <div class="composer">
         <form class="composer__form" id="composer" autocomplete="on">
@@ -76,15 +76,19 @@
           </div></fieldset>
           <div class="composer__fields">
             <div class="field"><label for="c-name">Your name</label><input id="c-name" name="name" autocomplete="name" maxlength="60"></div>
-            <div class="field"><label for="c-biz">Business (optional)</label><input id="c-biz" name="organization" autocomplete="organization" maxlength="80"></div>
+            <div class="field"><label for="c-email">Your email (so Rohit can reply)</label><input id="c-email" name="email" type="email" autocomplete="email" maxlength="120" inputmode="email"></div>
+            <div class="field composer__wide"><label for="c-biz">Business (optional)</label><input id="c-biz" name="organization" autocomplete="organization" maxlength="80"></div>
+            <div class="hp" aria-hidden="true"><label for="c-website">Leave this empty</label><input id="c-website" name="website" tabindex="-1" autocomplete="off"></div>
           </div>
           <div class="field"><label for="c-more">Anything else? (optional)</label><textarea id="c-more" maxlength="600" placeholder="e.g. we lose about a day a week to this"></textarea></div>
         </form>
-        <div class="letter-card" aria-live="polite">
+        <div class="letter-card" id="letter-card">
           <div class="letter-card__meta"><span><b>To</b> <span data-email data-email-text>rohit@wolfinn.org</span></span><span><b>Subject</b> <span id="c-subject"></span></span></div>
           <pre class="letter-card__body" id="c-body"></pre>
+          <div class="letter-card__sent" id="c-sent" hidden><span class="letter-card__tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg></span><h2>Sent. Thank you.</h2><p id="c-sent-text">Rohit will reply by email.</p><button class="btn btn--ghost" type="button" id="c-again">Write another</button></div>
           <div class="letter-card__actions">
-            <button class="btn btn--moon" type="button" id="c-copy">Copy message</button>
+            <button class="btn btn--moon" type="button" id="c-send">Send message</button>
+            <button class="btn btn--ghost" type="button" id="c-copy">Copy instead</button>
           </div>
           <p class="copy-note" id="c-note" aria-live="polite"></p>
           <div class="letter-card__direct"><span>Nothing fits? Email directly:</span> <a data-email data-email-text data-subject="A problem in my business" href="#">rohit@wolfinn.org</a> <button class="linkbtn" type="button" data-copy-email="c-note">Copy</button></div>
@@ -103,6 +107,7 @@
 <script src="js/scrollcraft.js"></script>
 <script src="js/orca.js"></script>
 <script src="js/site.js"></script>
+<script src="js/finn.js"></script>
 <script src="js/composer.js"></script>
 <script>ScrollCraft.mount(document.body);</script>
 </body>

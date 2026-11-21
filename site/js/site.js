@@ -6,6 +6,10 @@
 
   /* ---- the one place to set the contact address ------------------------ */
   var EMAIL = 'rohit@wolfinn.org';
+  // Paste the Google Apps Script web app URL here (ends in /exec) to switch on
+  // the contact form and Finn's AI answers. Empty = form falls back to copy,
+  // Finn answers from a short built-in FAQ. See backend/apps-script/README.md.
+  var BACKEND = '';
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -177,6 +181,13 @@
   }
 
   /* ---- shared with page scripts (the contact composer) ----------------- */
-  window.Wolfinn = { email: EMAIL, mailto: mailto, howl: howl };
+  // POST JSON to the Apps Script backend. Sent as text/plain so the browser
+  // makes a simple request (no CORS preflight, which Apps Script can't answer).
+  function post(data) {
+    if (!BACKEND) return Promise.reject(new Error('offline'));
+    return fetch(BACKEND, { method: 'POST', body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
+  }
+  window.Wolfinn = { email: EMAIL, mailto: mailto, howl: howl, backend: BACKEND, post: post };
 
 })();
