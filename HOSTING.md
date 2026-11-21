@@ -42,7 +42,7 @@ Always use the values Netlify shows you, in case they differ from the table.
 - In Netlify's **Domain management**, `wolfinn.org` turns green once it's working. Netlify then issues the free HTTPS certificate on its own. Make sure **Force HTTPS** is on.
 - Set `wolfinn.org` (without www) as the primary domain, so `www.wolfinn.org` redirects to it.
 
-## Step 5: Switch on the contact form and Finn
+## Step 5: Switch on the contact form
 
 Follow `backend/apps-script/README.md`. It sets up a Google Apps Script on your Workspace account, and you paste its URL into `site/js/site.js`.
 
@@ -59,5 +59,3 @@ Once Netlify is connected, **every change pushed to the `main` branch goes live 
 - [ ] `https://wolfinn.org` and `https://www.wolfinn.org` both open the site with a padlock.
 - [ ] Sending an email to rohit@wolfinn.org still works.
 - [ ] The Contact page's **Send message** delivers to your inbox.
-- [ ] Finn answers a question (and not "Preview: answers come from a short FAQ").
-- [ ] A spending limit is set in the Anthropic Console.

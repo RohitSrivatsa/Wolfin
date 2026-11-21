@@ -7,8 +7,8 @@
   /* ---- the one place to set the contact address ------------------------ */
   var EMAIL = 'rohit@wolfinn.org';
   // Paste the Google Apps Script web app URL here (ends in /exec) to switch on
-  // the contact form and Finn's AI answers. Empty = form falls back to copy,
-  // Finn answers from a short built-in FAQ. See backend/apps-script/README.md.
+  // the contact form's Send button. Empty = the form copies the message instead.
+  // See backend/apps-script/README.md.
   var BACKEND = '';
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -1,11 +1,6 @@
-# Wolfinn backend: contact form + Finn (Google Apps Script)
+# Wolfinn backend: contact form (Google Apps Script)
 
-One small script in your Google account does two jobs:
-
-- **Contact form:** emails each enquiry to rohit@wolfinn.org from your own Google Workspace account. The visitor's address is set as reply-to, so you just press Reply.
-- **Finn, the AI assistant:** answers visitors using Claude. Your Anthropic API key stays inside Google, never in the website.
-
-It's free to run on Google's side. Finn's answers are billed by Anthropic per message (see "Costs" below).
+One small script in your Google account powers the Contact page's **Send message** button. It emails each enquiry to rohit@wolfinn.org from your own Google Workspace account, with the visitor's address set as reply-to, so you just press Reply. It's free.
 
 ## 1. Create the script (5 minutes)
 
@@ -21,20 +16,18 @@ It's free to run on Google's side. Finn's answers are billed by Anthropic per me
 | Property | Value |
 |---|---|
 | `NOTIFY_EMAIL` | `rohit@wolfinn.org` |
-| `ANTHROPIC_API_KEY` | your key from <https://console.anthropic.com> → API keys. Leave it out to run the form only. |
 | `LOG_SHEET_ID` | optional. The ID of a Google Sheet to log every enquiry (the long code in the Sheet's URL). |
 
 ## 3. Test it from the editor
 
 1. In the editor, choose `testContact` in the function menu and press **Run**.
 2. Google asks for permission the first time: **Review permissions** → your account → **Allow**. A test email should arrive in your inbox.
-3. Choose `testChat` and press **Run**. The log should show a reply from Finn. If it says `chat_off`, the API key property is missing.
 
 ## 4. Deploy it as a web app
 
 1. Click **Deploy → New deployment**. Under **Select type** (gear icon), choose **Web app**.
 2. Set **Execute as** to **Me (rohit@wolfinn.org)**.
-3. Set **Who has access** to **Anyone**. This is needed so website visitors can reach it; they can only send a message or ask Finn a question.
+3. Set **Who has access** to **Anyone**. This is needed so website visitors can reach it; all they can do is send you a message.
 4. Click **Deploy** and copy the **Web app URL**. It ends in `/exec`.
 
 ## 5. Connect the website
@@ -45,16 +38,13 @@ Open `site/js/site.js` and paste the URL here:
 var BACKEND = 'https://script.google.com/macros/s/XXXX/exec';
 ```
 
-Commit and push. Once the site is hosted, it redeploys on its own. The Contact page's **Send message** then really sends, and Finn switches from the FAQ to Claude.
+Commit and push (or send me the URL and I'll do it). Once the site is hosted, it redeploys on its own, and **Send message** really sends.
 
 ## Updating the script later
 
 Edit the code, then go to **Deploy → Manage deployments**, click the pencil icon, set **Version** to **New version**, and click **Deploy**. The URL stays the same, so the website needs no change.
 
-## Costs and limits
+## Limits
 
-- **Model:** Finn uses `claude-opus-5-5` at low effort. A typical message costs around one to two cents.
-- **Cheaper option:** change `MODEL` at the top of `Code.gs` to `'claude-haiku-5-5'` for roughly a fortieth of the cost, with simpler answers.
-- **Built-in caps:** 300 chat messages and 40 form messages per hour across the whole site. Change `CHAT_LIMIT_PER_HOUR` and `CONTACT_LIMIT_PER_HOUR` to adjust them.
-- **Spending limit:** set a monthly limit in the Anthropic Console (Settings → Limits) as a safety net.
+- **Message cap:** at most 40 messages an hour across the site, to stop floods. Change `CONTACT_LIMIT_PER_HOUR` in `Code.gs` to adjust it.
 - **Spam:** a hidden "honeypot" field quietly drops most bot submissions.
