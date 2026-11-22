@@ -9,7 +9,7 @@
   // Paste the Google Apps Script web app URL here (ends in /exec) to switch on
   // the contact form's Send button. Empty = the form copies the message instead.
   // See backend/apps-script/README.md.
-  var BACKEND = '';
+  var BACKEND = 'https://script.google.com/macros/s/AKfycbzmecHxj-EXJ7N2txKFeUaoC9KVkS-phArVdhFmz75TK_T88XFYJUS2d41BfFfaxGoI/exec';
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
