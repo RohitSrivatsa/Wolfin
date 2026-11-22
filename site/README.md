@@ -17,7 +17,7 @@ See `../HOSTING.md` (Netlify + your Squarespace domain) and `../backend/apps-scr
 ## Things to change
 
 - **Backend URL:** `BACKEND` at the top of `js/site.js` (the Apps Script web app URL). Empty means the form copies the message instead of sending.
-- **Email address:** `EMAIL` at the top of `js/site.js` (currently rohit@wolfinn.org). The copy buttons, email links and the gap finder's pre-filled email all read from it.
+- **Email address:** `EMAIL` at the top of `js/site.js` (currently admin@wolfinn.org). The copy buttons, email links and the contact form all read from it.
 - **Light and dark mode:** the site opens in light mode. The switch in the top bar changes it, and the choice is remembered on every page. The dark colours are in the `:root[data-wf-theme="dark"]` block near the top of `css/site.css`. The site uses its own `data-wf-theme` attribute so nothing outside the site can flip the theme.
 - **Services:** six services (workflow automation, custom software, websites and web apps, software consulting, data analytics, AI assistants). The home tiles are in `index.html` (`.svc-grid`); the full list with mini flows is in `services/index.html`.
 - **The wolf's howl:** copying the email makes the wolf lift its head. The head is cut out of `img/wolf-island.svg` in `js/site.js` (look for `wolf-clip-head`).

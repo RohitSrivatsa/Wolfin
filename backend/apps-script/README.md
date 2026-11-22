@@ -1,10 +1,10 @@
 # Wolfinn backend: contact form (Google Apps Script)
 
-One small script in your Google account powers the Contact page's **Send message** button. It emails each enquiry to rohit@wolfinn.org from your own Google Workspace account, with the visitor's address set as reply-to, so you just press Reply. It's free.
+One small script in your Google account powers the Contact page's **Send message** button. It emails each enquiry to admin@wolfinn.org from your own Google Workspace account, with the visitor's address set as reply-to, so you just press Reply. It's free.
 
 ## 1. Create the script (5 minutes)
 
-1. Sign in to Google as **rohit@wolfinn.org** and open <https://script.google.com>.
+1. Sign in to Google with your Workspace account and open <https://script.google.com>.
 2. Click **New project**. Rename it **Wolfinn backend** (top left).
 3. Delete the sample code, paste in everything from `Code.gs` in this folder, and click **Save**.
 
@@ -15,7 +15,7 @@ One small script in your Google account powers the Contact page's **Send message
 
 | Property | Value |
 |---|---|
-| `NOTIFY_EMAIL` | `rohit@wolfinn.org` |
+| `NOTIFY_EMAIL` | `admin@wolfinn.org` |
 | `LOG_SHEET_ID` | optional. The ID of a Google Sheet to log every enquiry (the long code in the Sheet's URL). |
 
 ## 3. Test it from the editor
@@ -26,7 +26,7 @@ One small script in your Google account powers the Contact page's **Send message
 ## 4. Deploy it as a web app
 
 1. Click **Deploy → New deployment**. Under **Select type** (gear icon), choose **Web app**.
-2. Set **Execute as** to **Me (rohit@wolfinn.org)**.
+2. Set **Execute as** to **Me** (your account).
 3. Set **Who has access** to **Anyone**. This is needed so website visitors can reach it; all they can do is send you a message.
 4. Click **Deploy** and copy the **Web app URL**. It ends in `/exec`.
 

@@ -5,11 +5,11 @@
  *
  * Setup (once): see backend/apps-script/README.md
  * Script properties (Project Settings -> Script properties):
- *   NOTIFY_EMAIL        where contact messages go (default rohit@wolfinn.org)
+ *   NOTIFY_EMAIL        where contact messages go (default admin@wolfinn.org)
  *   LOG_SHEET_ID        optional: a Google Sheet ID to log every enquiry
  */
 
-var DEFAULT_NOTIFY = 'rohit@wolfinn.org';
+var DEFAULT_NOTIFY = 'admin@wolfinn.org';
 var CONTACT_LIMIT_PER_HOUR = 40;
 
 /* -------------------------------------------------------------- routing -- */

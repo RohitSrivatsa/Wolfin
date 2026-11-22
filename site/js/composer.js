@@ -2,7 +2,7 @@
    or copy. Sending goes through the Apps Script backend set in js/site.js. */
 (function () {
   'use strict';
-  var W = window.Wolfinn || { email: 'rohit@wolfinn.org', howl: function () {}, post: function () { return Promise.reject(new Error('offline')); } };
+  var W = window.Wolfinn || { email: 'admin@wolfinn.org', howl: function () {}, post: function () { return Promise.reject(new Error('offline')); } };
   var form = document.getElementById('composer'); if (!form) return;
   var card = document.getElementById('letter-card'), bodyEl = document.getElementById('c-body'), subj = document.getElementById('c-subject');
   var note = document.getElementById('c-note'), sendBtn = document.getElementById('c-send'), sent = document.getElementById('c-sent');

@@ -5,7 +5,7 @@
   'use strict';
 
   /* ---- the one place to set the contact address ------------------------ */
-  var EMAIL = 'rohit@wolfinn.org';
+  var EMAIL = 'admin@wolfinn.org';
   // Paste the Google Apps Script web app URL here (ends in /exec) to switch on
   // the contact form's Send button. Empty = the form copies the message instead.
   // See backend/apps-script/README.md.

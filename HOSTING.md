@@ -2,7 +2,7 @@
 
 - **GitHub Pages** hosts the website for free, straight from this repository (it's public, which free Pages requires).
 - **Squarespace** keeps the domain; you only change where wolfinn.org points.
-- **Google Workspace** email (rohit@wolfinn.org) is not affected, as long as you leave its records alone.
+- **Google Workspace** email (admin@wolfinn.org) is not affected, as long as you leave its records alone.
 
 Squarespace itself can't host this site: it only runs sites built in its own editor.
 
@@ -60,7 +60,7 @@ Every change merged into `main` publishes itself within a minute or two through 
 
 ## Afterwards
 
-- Send yourself a test email to rohit@wolfinn.org to confirm email still works.
+- Send yourself a test email to admin@wolfinn.org to confirm email still works.
 - Switch on the contact form's Send button: follow `backend/apps-script/README.md`, then send me the web app URL.
 
 ## If something goes wrong
