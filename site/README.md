@@ -19,14 +19,16 @@ See `../HOSTING.md` (Netlify + your Squarespace domain) and `../backend/apps-scr
 - **Backend URL:** `BACKEND` at the top of `js/site.js` (the Apps Script web app URL). Empty means the form copies the message instead of sending.
 - **Email address:** `EMAIL` at the top of `js/site.js` (currently rohit@wolfinn.org). The copy buttons, email links and the gap finder's pre-filled email all read from it.
 - **Light and dark mode:** the site opens in light mode. The switch in the top bar changes it, and the choice is remembered on every page. The dark colours are in the `:root[data-wf-theme="dark"]` block near the top of `css/site.css`. The site uses its own `data-wf-theme` attribute so nothing outside the site can flip the theme.
-- **Services:** six services (workflow automation, custom software, websites and web apps, software consulting, data analytics, AI assistants). The home tiles are in `index.html` (`.svc-grid`); the full list with mini flows is in `services.html`.
+- **Services:** six services (workflow automation, custom software, websites and web apps, software consulting, data analytics, AI assistants). The home tiles are in `index.html` (`.svc-grid`); the full list with mini flows is in `services/index.html`.
 - **The wolf's howl:** copying the email makes the wolf lift its head. The head is cut out of `img/wolf-island.svg` in `js/site.js` (look for `wolf-clip-head`).
-- **Contact composer options:** the problem and tool buttons are plain HTML in `contact.html`; the email wording is in `js/composer.js`.
+- **Contact composer options:** the problem and tool buttons are plain HTML in `contact/index.html`; the email wording is in `js/composer.js`.
 
 ## Files
 
-- `index.html`, `services.html`, `contact.html`: the main pages.
-- `demo-automation.html`, `demo-software.html`, `demo-websites.html`, `demo-consulting.html`, `demo-analytics.html`, `demo-assistant.html`: one interactive demo per service, linked from the service tiles. Each demo keeps its own styles and script inside the page; shared demo styles are in `css/demo.css`.
+- Pages live in folders so addresses have no `.html`: `index.html` (wolfinn.org/), `services/index.html` (/services/), `contact/index.html` (/contact/).
+- `demos/<name>/index.html` (software, websites, consulting, analytics, assistant, automation): one interactive demo per service at /demos/<name>/, linked from the service tiles.
+- `services.html`, `contact.html`, `demo-*.html`: tiny forwarding pages so old addresses still work.
+- Links and assets use paths from the site root (`/css/...`, `/services/`), so preview locally from the `site` folder: `python3 -m http.server`. Each demo keeps its own styles and script inside the page; shared demo styles are in `css/demo.css`.
 - `js/composer.js`: the Contact page composer. **Send message** goes through the backend; **Copy instead** always works.
 - `css/site.css`: all of the site's styling (colours are the tokens at the top).
 - `css/scrollcraft.css`, `js/scrollcraft.js`: the scroll engine (reveals and hero parallax). Don't edit these.

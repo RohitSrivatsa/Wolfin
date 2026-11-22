@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Data analytics demo · Wolfinn</title>
+<meta name="description" content="Data analytics by Wolfinn: an interactive demo. From a messy spreadsheet to a dashboard you can actually read.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="/img/favicon.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta property="og:title" content="Wolfinn">
+<meta property="og:description" content="Software and AI that quietly takes the busywork off your plate.">
+<meta property="og:image" content="https://wolfinn.org/img/mark-512.png">
+<script>(function(){var t=null;try{t=localStorage.getItem('wolfinn-theme')}catch(e){}if(!t){var m=/wolfinn-theme:(dark|light)/.exec(window.name||'');if(m)t=m[1]}document.documentElement.setAttribute('data-wf-theme',t==='dark'?'dark':'light')})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/css/scrollcraft.css">
+<link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="/css/demo.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="bar__brand" href="/" aria-label="Wolfinn home"><img class="logo-light" src="/img/wolfinn-wordmark-ink.png" width="576" height="123" alt="Wolfinn"><img class="logo-dark" src="/img/wolfinn-wordmark-light.png" width="576" height="123" alt="Wolfinn"></a>
+  <div class="bar__right">
+    <nav class="bar__nav" aria-label="Main"><a href="/">Home</a><a href="/services/" aria-current="page">Services</a><a class="btn btn--ink" href="/contact/">Contact</a></nav>
+    <button class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><span class="theme-switch__knob"></span></button>
+    <button class="bar__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Menu">
+    <a href="/">Home</a>
+    
+    <a href="/services/">Services</a>
+    <a href="/contact/">Contact</a>
+  </nav>
+  <div class="menu__foot"><span class="label">Email</span><a data-email data-email-text href="/contact/" style="color:#F2EFEA">rohit@wolfinn.org</a></div>
+  <div class="orca orca--drift" data-orca></div>
+</div>
+
+<main id="main" class="demo">
+  <section class="demo-head">
+    <a class="demo-back btn btn--ghost" href="/services/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>See all services</a>
+    <div class="demo-head__row">
+      <div><span class="demo-kicker">Live demo · sample data</span><h1>Data analytics</h1><p>From a messy spreadsheet to a dashboard you can actually read.</p></div>
+      <p class="demo-how"><b>Try it:</b> build the dashboard, then filter by area and period. Hover the chart for details.</p>
+    </div>
+  </section>
+
+<style>
+.an { --series: #0E3A42; --series-fill: rgba(14,58,66,.10); --hi: #F27A2E; }
+:root[data-wf-theme="dark"] .an { --series: #7FC4CC; --series-fill: rgba(127,196,204,.12); }
+.raw { padding: clamp(18px, 2.6vw, 28px); display: grid; gap: 14px; align-content: start; }
+.raw h2, .dash h2 { margin: 6px 0 0; font: 600 1.4rem/1.1 var(--sc-font-display); letter-spacing: -0.02em; }
+.raw__table { max-height: 300px; overflow: auto; border: 1px solid var(--line); border-radius: 12px; }
+.raw table { width: 100%; border-collapse: collapse; font: 400 .8rem/1.3 var(--sc-font-mono); }
+.raw th { position: sticky; top: 0; background: var(--field); text-align: left; padding: 8px 10px; font-weight: 500; color: var(--ink-3); }
+.raw td { padding: 6px 10px; border-top: 1px solid var(--line); white-space: nowrap; color: var(--ink-2); }
+.raw td.bad { color: var(--moon-text); }
+:root[data-wf-theme="dark"] .raw td.bad { color: var(--moon); }
+.raw p { margin: 0; font-size: .88rem; color: var(--ink-3); }
+.dash { padding: clamp(18px, 2.6vw, 28px); display: grid; gap: 18px; align-content: start; position: relative; min-width: 0; }
+.dash__top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.seg { display: inline-flex; border: 1px solid var(--edge); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { all: unset; cursor: pointer; padding: 7px 12px; border-radius: 999px; font-size: .85rem; color: var(--ink-2); }
+.seg button[aria-checked="true"] { background: var(--ink); color: var(--on-ink); }
+.seg button:focus-visible { outline: 2px solid var(--moon); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.kpi { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.kpi span { display: block; font-size: .8rem; color: var(--ink-3); }
+.kpi strong { display: block; margin-top: 6px; font: 600 1.55rem/1 var(--sc-font-display); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.charts { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 12px; }
+.chart { border: 1px solid var(--line); border-radius: 14px; padding: 14px; position: relative; min-width: 0; }
+.chart h3 { margin: 0 0 8px; font: 600 .95rem/1.2 var(--sc-font-text); }
+.chart svg { display: block; width: 100%; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 400 11px var(--sc-font-text); }
+.chart .grid line { stroke: var(--line); }
+.chart .ln { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .ar { fill: var(--series-fill); }
+.chart .hbar { fill: var(--series); }
+.chart .hbar.is-top { fill: var(--hi); }
+.chart .vlabel { fill: var(--ink-2); font-weight: 600; }
+.chart .xhair { stroke: var(--ink-3); stroke-dasharray: 3 3; }
+.chart .dot { fill: var(--surface); stroke: var(--series); stroke-width: 2; }
+.chart .dot--end { fill: var(--hi); stroke: var(--surface); }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--on-ink); padding: 8px 10px; border-radius: 10px; font-size: .82rem; line-height: 1.3; opacity: 0; transform: translate(-50%, -110%); transition: opacity 120ms; white-space: nowrap; z-index: 3; }
+.tip b { display: block; font-size: .95rem; }
+.tip.is-on { opacity: 1; }
+.dash.is-hidden > :not(.dash__veil) { visibility: hidden; }
+.dash__veil { position: absolute; inset: 0; display: none; place-items: center; text-align: center; padding: 24px; color: var(--ink-2); }
+.dash.is-hidden .dash__veil { display: grid; }
+details.tbl summary { cursor: pointer; font-size: .9rem; color: var(--ink-2); }
+details.tbl table { margin-top: 10px; width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+details.tbl th, details.tbl td { text-align: left; padding: 6px 8px; border-top: 1px solid var(--line); }
+details.tbl td:last-child, details.tbl th:last-child { text-align: right; }
+@media (max-width: 1000px) { .charts { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .kpis { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<section class="demo-stage an">
+  <div class="split split--wide">
+    <div class="panel raw">
+      <span class="panel__label">Step 1 · your data</span>
+      <h2>A year of job records</h2>
+      <div class="raw__table" tabindex="0" aria-label="Sample spreadsheet"><table><thead><tr><th>date</th><th>service</th><th>area</th><th>amount</th></tr></thead><tbody id="rawrows"></tbody></table></div>
+      <p id="rawcount"></p>
+      <button class="btn btn--moon" type="button" id="buildbtn" style="justify-self:start">Turn it into a dashboard</button>
+    </div>
+    <div class="panel dash is-hidden" id="dash">
+      <div class="dash__veil"><p>Press <b>Turn it into a dashboard</b> to see this sample spreadsheet as a live dashboard.</p></div>
+      <div class="dash__top"><div><span class="panel__label">Step 2 · your dashboard</span><h2>How the year went</h2></div>
+        <div class="filters">
+          <div class="seg" role="radiogroup" aria-label="Area" data-f="area"><button type="button" role="radio" aria-checked="true" data-v="All">All areas</button><button type="button" role="radio" aria-checked="false" data-v="North">North</button><button type="button" role="radio" aria-checked="false" data-v="South">South</button></div>
+          <div class="seg" role="radiogroup" aria-label="Period" data-f="months"><button type="button" role="radio" aria-checked="false" data-v="6">6 months</button><button type="button" role="radio" aria-checked="true" data-v="12">12 months</button></div>
+        </div>
+      </div>
+      <div class="kpis"><div class="kpi"><span>Revenue</span><strong id="k-rev">0</strong></div><div class="kpi"><span>Jobs</span><strong id="k-jobs">0</strong></div><div class="kpi"><span>Average job</span><strong id="k-avg">0</strong></div><div class="kpi"><span>Best month</span><strong id="k-best">-</strong></div></div>
+      <div class="charts">
+        <div class="chart" id="c-line"><h3>Revenue by month</h3><svg id="svg-line" height="230" role="img" aria-label="Line chart of revenue by month"></svg><div class="tip" id="tip"></div></div>
+        <div class="chart"><h3>Revenue by service</h3><svg id="svg-bar" height="230" role="img" aria-label="Bar chart of revenue by service"></svg></div>
+      </div>
+      <details class="tbl"><summary>Show as a table</summary><table><thead><tr><th>Month</th><th>Jobs</th><th>Revenue</th></tr></thead><tbody id="tbl"></tbody></table></details>
+      <p class="plan__fine" style="margin:0;font-size:.82rem;color:var(--ink-3)">Sample data for a made-up business. Your dashboard would use your own spreadsheets, invoices or tools.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MONTHS = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+  var SERVICES = ['Repairs', 'Installations', 'Maintenance', 'Emergency call-outs'];
+  var BASE = { 'Repairs': 180, 'Installations': 1450, 'Maintenance': 120, 'Emergency call-outs': 260 };
+  var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  var rows = [];
+  MONTHS.forEach(function (m, mi) {
+    var season = 1 + 0.35 * Math.sin((mi - 2) / 12 * Math.PI * 2);
+    var n = Math.round(14 + mi * 0.8 + rnd() * 5);
+    for (var i = 0; i < n; i++) {
+      var s = SERVICES[Math.floor(rnd() * 4.4) % 4];
+      rows.push({ m: mi, s: s, a: rnd() < 0.5 ? 'North' : 'South', v: Math.round(BASE[s] * season * (0.6 + rnd() * 0.8)) });
+    }
+  });
+  // the "messy" raw view
+  var rb = document.getElementById('rawrows'), html = '';
+  rows.slice(0, 40).forEach(function (r, i) {
+    var day = 1 + (i * 7) % 27, messy = i % 9 === 4;
+    var date = messy ? (day + '/' + (r.m === 0 ? 12 : r.m) + '/2025') : ((r.m === 0 ? '2025-12' : '2026-' + String(r.m).padStart(2, '0')) + '-' + String(day).padStart(2, '0'));
+    html += '<tr><td' + (messy ? ' class="bad"' : '') + '>' + date + '</td><td>' + (i % 11 === 6 ? r.s.toLowerCase() + ' ' : r.s) + '</td><td>' + r.a + '</td><td' + (i % 13 === 8 ? ' class="bad">$' + r.v + '.00' : '>' + r.v) + '</td></tr>';
+  });
+  rb.innerHTML = html;
+  document.getElementById('rawcount').textContent = rows.length + ' rows, mixed date formats and stray dollar signs. Like most real spreadsheets.';
+
+  var f = { area: 'All', months: 12 };
+  var money = function (v) { return '$' + Math.round(v).toLocaleString('en-US'); };
+  var short = function (v) { return v >= 1000 ? '$' + (v / 1000).toFixed(v >= 10000 ? 0 : 1) + 'k' : '$' + Math.round(v); };
+  function nice(max) { var p = Math.pow(10, Math.floor(Math.log10(max))), n = max / p; return (n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+  function count(id, to, fmt) {
+    var e = document.getElementById(id);
+    if (reduce) { e.textContent = fmt(to); return; }
+    var t0 = performance.now();
+    (function step(t) { var k = Math.min(1, (t - t0) / 700); k = 1 - Math.pow(1 - k, 3); e.textContent = fmt(to * k); if (k < 1) requestAnimationFrame(step); })(t0);
+  }
+  function data() {
+    var sel = rows.filter(function (r) { return (f.area === 'All' || r.a === f.area) && r.m >= 12 - f.months; });
+    var months = MONTHS.slice(12 - f.months).map(function (name, i) {
+      var mi = 12 - f.months + i, rs = sel.filter(function (r) { return r.m === mi; });
+      return { name: name, rev: rs.reduce(function (a, r) { return a + r.v; }, 0), jobs: rs.length };
+    });
+    var bys = SERVICES.map(function (s) { return { name: s, rev: sel.filter(function (r) { return r.s === s; }).reduce(function (a, r) { return a + r.v; }, 0) }; }).sort(function (a, b) { return b.rev - a.rev; });
+    return { sel: sel, months: months, bys: bys };
+  }
+  function drawLine(months, animate) {
+    var svg = document.getElementById('svg-line'); svg.innerHTML = '';
+    var W = svg.clientWidth || 600, H = 230, L = 44, R = 12, T = 10, B = 26;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var max = nice(Math.max.apply(null, months.map(function (m) { return m.rev; })) * 1.05);
+    var x = function (i) { return L + (W - L - R) * (months.length === 1 ? 0.5 : i / (months.length - 1)); };
+    var y = function (v) { return T + (H - T - B) * (1 - v / max); };
+    var g = el('g', { class: 'grid' }, svg);
+    for (var k = 0; k <= 4; k++) { var v = max * k / 4; el('line', { x1: L, x2: W - R, y1: y(v), y2: y(v) }, g); var tx = el('text', { x: L - 8, y: y(v) + 4, 'text-anchor': 'end' }, svg); tx.textContent = short(v); }
+    months.forEach(function (m, i) { if (months.length > 8 && i % 2) return; var tx = el('text', { x: x(i), y: H - 6, 'text-anchor': 'middle' }, svg); tx.textContent = m.name; });
+    var d = months.map(function (m, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(m.rev).toFixed(1); }).join('');
+    el('path', { class: 'ar', d: d + 'L' + x(months.length - 1) + ' ' + y(0) + 'L' + x(0) + ' ' + y(0) + 'Z' }, svg);
+    var ln = el('path', { class: 'ln', d: d }, svg);
+    if (animate && !reduce) { var len = ln.getTotalLength(); ln.style.strokeDasharray = len; ln.style.strokeDashoffset = len; ln.getBoundingClientRect(); ln.style.transition = 'stroke-dashoffset 1100ms cubic-bezier(.65,0,.35,1)'; ln.style.strokeDashoffset = 0; }
+    var last = months.length - 1;
+    el('circle', { class: 'dot dot--end', cx: x(last), cy: y(months[last].rev), r: 5 }, svg);
+    var xh = el('line', { class: 'xhair', y1: T, y2: H - B, x1: -10, x2: -10 }, svg);
+    var hd = el('circle', { class: 'dot', r: 5, cx: -10, cy: -10, visibility: 'hidden' }, svg);
+    var tip = document.getElementById('tip');
+    var hit = el('rect', { x: L, y: T, width: W - L - R, height: H - T - B, fill: 'transparent' }, svg);
+    function at(evx) {
+      var r = svg.getBoundingClientRect(), px = (evx - r.left) * W / r.width;
+      var i = Math.max(0, Math.min(last, Math.round((px - L) / ((W - L - R) / Math.max(1, last)))));
+      xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); hd.setAttribute('cx', x(i)); hd.setAttribute('cy', y(months[i].rev)); hd.setAttribute('visibility', 'visible');
+      tip.innerHTML = '<b>' + money(months[i].rev) + '</b>' + months[i].name + ' · ' + months[i].jobs + ' jobs';
+      tip.style.left = (14 + x(i) * r.width / W) + 'px'; tip.style.top = (36 + y(months[i].rev) * r.height / H) + 'px'; tip.classList.add('is-on');
+    }
+    hit.addEventListener('pointermove', function (e) { at(e.clientX); });
+    hit.addEventListener('pointerdown', function (e) { at(e.clientX); });
+    hit.addEventListener('pointerleave', function () { tip.classList.remove('is-on'); xh.setAttribute('x1', -10); xh.setAttribute('x2', -10); hd.setAttribute('visibility', 'hidden'); });
+  }
+  function drawBars(bys, animate) {
+    var svg = document.getElementById('svg-bar'); svg.innerHTML = '';
+    var W = svg.clientWidth || 360, H = 230, L = 0, R = 64, rowH = H / bys.length;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var max = Math.max.apply(null, bys.map(function (b) { return b.rev; })) || 1;
+    bys.forEach(function (b, i) {
+      var y0 = i * rowH, bw = Math.max(4, (W - L - R) * b.rev / max);
+      var t = el('text', { x: 0, y: y0 + 16 }, svg); t.textContent = b.name;
+      var bar = el('rect', { class: 'hbar' + (i === 0 ? ' is-top' : ''), x: L, y: y0 + 24, height: 16, rx: 4, width: animate && !reduce ? 0 : bw }, svg);
+      if (animate && !reduce) { bar.style.width = '0px'; bar.getBoundingClientRect(); bar.style.transition = 'width 900ms cubic-bezier(.23,1,.32,1) ' + (i * 90) + 'ms'; requestAnimationFrame(function () { requestAnimationFrame(function () { bar.setAttribute('width', bw); bar.style.width = bw + 'px'; }); }); }
+      var v = el('text', { class: 'vlabel', x: bw + 8, y: y0 + 36 }, svg); v.textContent = short(b.rev);
+    });
+  }
+  var built = false;
+  function render(animate) {
+    var D = data();
+    var rev = D.sel.reduce(function (a, r) { return a + r.v; }, 0);
+    count('k-rev', rev, money); count('k-jobs', D.sel.length, function (v) { return Math.round(v).toString(); }); count('k-avg', rev / Math.max(1, D.sel.length), money);
+    var best = D.months.reduce(function (a, m) { return m.rev > a.rev ? m : a; }, D.months[0]);
+    document.getElementById('k-best').textContent = best.name;
+    drawLine(D.months, animate); drawBars(D.bys, animate);
+    document.getElementById('tbl').innerHTML = D.months.map(function (m) { return '<tr><td>' + m.name + '</td><td>' + m.jobs + '</td><td>' + money(m.rev) + '</td></tr>'; }).join('');
+  }
+  document.getElementById('buildbtn').addEventListener('click', function () {
+    document.getElementById('dash').classList.remove('is-hidden'); built = true; render(true);
+    this.textContent = 'Build it again';
+  });
+  document.querySelectorAll('[data-f]').forEach(function (g) {
+    var bs = g.querySelectorAll('button');
+    bs.forEach(function (b) { b.addEventListener('click', function () {
+      bs.forEach(function (x) { x.setAttribute('aria-checked', x === b ? 'true' : 'false'); });
+      var k = g.getAttribute('data-f'); f[k] = k === 'months' ? +b.getAttribute('data-v') : b.getAttribute('data-v');
+      if (built) render(true);
+    }); });
+  });
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (built) render(false); }, 150); });
+})();
+</script>
+
+
+  <section class="demo-cta" aria-labelledby="cta-title">
+    <div class="water" data-ripple></div>
+    <div class="demo-cta__in">
+      <div><h2 id="cta-title">Want this in your business?</h2><p>Tell us what you'd want it to do. One email starts it.</p></div>
+      <div class="demo-cta__actions">
+        <a class="btn btn--moon" data-email data-subject="Data analytics for my business" href="/contact/">Email about this</a>
+        <a class="btn btn--ghost" href="/demos/assistant/">Next demo: AI assistants</a>
+      </div>
+    </div>
+    <div class="orca orca--drift" data-orca></div>
+    <footer class="foot"><span>© Wolfinn</span><nav aria-label="Footer"><a href="/">Home</a><a href="/services/">Services</a><a href="/contact/">Contact</a></nav></footer>
+  </section>
+</main>
+
+<script src="/js/scrollcraft.js"></script>
+<script src="/js/orca.js"></script>
+<script src="/js/site.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+</body>
+</html>
