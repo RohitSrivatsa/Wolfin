@@ -56,7 +56,7 @@
         document.getElementById('c-sent-text').textContent = 'Rohit will reply to ' + email + '.';
         sent.hidden = false; card.classList.add('is-sent'); W.howl();
         // analytics: lets Google Tag Manager count enquiries
-        try { (window.dataLayer = window.dataLayer || []).push({ event: 'contact_form_sent', problems: c.probs.join(', ') }); } catch (e) {}
+        try { if (window.gtag) window.gtag('event', 'contact_form_sent', { problems: c.probs.join(', ') }); (window.dataLayer = window.dataLayer || []).push({ event: 'contact_form_sent', problems: c.probs.join(', ') }); } catch (e) {}
         try { localStorage.removeItem(KEY); } catch (e) {}
       })
       .catch(function (err) {

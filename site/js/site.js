@@ -32,7 +32,7 @@
     b.addEventListener('click', function () {
       var ok = function () {
         if (note) note.textContent = 'Copied: ' + EMAIL; if (typeof howl === 'function') howl();
-        try { (window.dataLayer = window.dataLayer || []).push({ event: 'email_copied' }); } catch (e) {}
+        try { if (window.gtag) window.gtag('event', 'email_copied'); (window.dataLayer = window.dataLayer || []).push({ event: 'email_copied' }); } catch (e) {}
       };
       var fail = function () { if (note) note.textContent = EMAIL; };
       try { navigator.clipboard.writeText(EMAIL).then(ok, fail); } catch (e) { fail(); }
