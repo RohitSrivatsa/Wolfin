@@ -30,7 +30,10 @@
   $$('[data-copy-email]').forEach(function (b) {
     var note = document.getElementById(b.getAttribute('data-copy-email'));
     b.addEventListener('click', function () {
-      var ok = function () { if (note) note.textContent = 'Copied: ' + EMAIL; if (typeof howl === 'function') howl(); };
+      var ok = function () {
+        if (note) note.textContent = 'Copied: ' + EMAIL; if (typeof howl === 'function') howl();
+        try { (window.dataLayer = window.dataLayer || []).push({ event: 'email_copied' }); } catch (e) {}
+      };
       var fail = function () { if (note) note.textContent = EMAIL; };
       try { navigator.clipboard.writeText(EMAIL).then(ok, fail); } catch (e) { fail(); }
     });
